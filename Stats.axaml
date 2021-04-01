@@ -1,0 +1,187 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="385" 
+        x:Class="AntStats.Avalonia.Stats"
+        WindowStartupLocation="CenterOwner"
+        Title="AntStats.Avalonia" Height="385" Width="900" MinWidth="900" MinHeight="385" >
+
+  
+
+     
+
+     
+
+        <Grid x:Name="MainW" Background="#1e2124">
+
+
+    
+                <Grid.RowDefinitions >
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                </Grid.RowDefinitions >
+                <Grid.ColumnDefinitions >
+                       <ColumnDefinition/>
+                       <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition />
+                        <ColumnDefinition/>    
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>  
+                        <ColumnDefinition/>
+                      
+                  
+                </Grid.ColumnDefinitions >
+                
+                <Label x:Name="label1" Grid.Row="0" Grid.Column="0" 
+                       Content="Chain#"
+                       VerticalAlignment="Stretch"
+                       FontSize="15"
+                       Margin="2"
+                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                ></Label>
+                <Label x:Name="label2" Grid.Row="0" Grid.Column="1" 
+                       Content="Frequency"
+                       VerticalAlignment="Stretch"
+                       FontSize="15"
+                       Margin="2"
+                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                ></Label>
+                <Label x:Name="label3" Grid.Row="0" Grid.Column="2" 
+                       Content="Watts"
+                       VerticalAlignment="Stretch"
+                       FontSize="15"
+                       Margin="2"
+                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                ></Label>
+                <Label x:Name="label4" Grid.Row="0" Grid.Column="3" 
+                       Content="GH/S(ideal)"
+                       VerticalAlignment="Stretch"
+                       FontSize="15"
+                       Margin="2"
+                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                ></Label>
+                <Label x:Name="label5" Grid.Row="0" Grid.Column="4" 
+                       Content="GH/S(RT)"
+                       VerticalAlignment="Stretch"
+                       FontSize="15"
+                       Margin="2"
+                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                ></Label>
+                <Label x:Name="label6" Grid.Row="0" Grid.Column="5" 
+                       Content="HW"
+                       VerticalAlignment="Stretch"
+                       FontSize="15"
+                       Margin="2"
+                       ToolTip.Tip="Hardware warnings"
+                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                ></Label>
+               
+                   <Label x:Name="label7" Grid.Row="0" Grid.Column="6" 
+                          Content="T(PCB)"
+                          VerticalAlignment="Stretch"
+                          FontSize="15"
+                          Margin="2"
+                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                   ></Label>
+                   <Label x:Name="label8" Grid.Row="0" Grid.Column="7" 
+                          Content="T(Chip)"
+                          VerticalAlignment="Stretch"
+                          FontSize="15"
+                          Margin="2"
+                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                   ></Label>
+                   <Label x:Name="label9" Grid.Row="0" Grid.Column="8" 
+                          Content="Status"
+                          VerticalAlignment="Stretch"
+                          FontSize="15"
+                          Margin="2"
+                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                   ></Label>
+          
+               
+                
+                
+            
+               
+     
+               
+               
+               <Label x:Name="Tooal" Grid.Row="10" Grid.Column="0" 
+                      Content="Total:"
+                      VerticalAlignment="Stretch"
+                      FontSize="15"
+                      Margin="2"
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+               ></Label>
+               
+               <Label x:Name="ElapsedTime" Grid.Row="10" Grid.Column="1" 
+                      Grid.ColumnSpan="2"
+                      VerticalAlignment="Stretch"
+                      FontSize="15"
+                      Margin="2"
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+               ></Label>
+               
+               <Label x:Name="HashrateAvg" Grid.Row="10" Grid.Column="3" 
+                      Grid.ColumnSpan="2"
+                      VerticalAlignment="Stretch"
+                      FontSize="15"
+                      Margin="2"
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+               ></Label>
+               <Label x:Name="DateTime" Grid.Row="10" Grid.Column="6" 
+                      Grid.ColumnSpan="2"
+                      VerticalAlignment="Stretch"
+                      FontSize="15"
+                      Margin="2"
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+               ></Label>
+
+
+               
+               
+            
+               
+               
+                <Button           
+                       
+                       Click="Button_OnClick"
+                        x:Name="Button" VerticalAlignment="Stretch"
+                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                        HorizontalAlignment="Stretch"
+                        Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="5" Content="GET"
+                       Margin="1"
+                ></Button>
+                
+              
+               <Button           
+                       
+                      Click="Settings_OnClick"
+                      x:Name="Settings" VerticalAlignment="Stretch"
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                      HorizontalAlignment="Stretch"
+                      Grid.Row="11" Grid.Column="8"  Content="Settings"
+                      Margin="1"
+               ></Button>
+                
+             
+            
+               
+             
+               
+
+        </Grid>
+</Window>

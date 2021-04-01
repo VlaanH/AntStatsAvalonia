@@ -1,0 +1,178 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="385" 
+        x:Class="AntStats.Avalonia.SettingsW"
+        WindowStartupLocation="CenterScreen"
+        Title="" Background="#1e2124" MinWidth="450" MinHeight="280" MaxHeight="350" MaxWidth="800">
+
+
+    
+    <Grid  Margin="10" > 
+       
+        <StackPanel>
+            
+            <Label  Content="Settings" BorderBrush="turquoise" BorderThickness="0,0,0,1" HorizontalContentAlignment="Center" FontSize="30" />
+                
+            <Grid  Margin="0,25,0,0">
+           
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions >
+                
+                <TextBox Grid.Column="0"  
+                         
+                         
+                         Margin="0,0,10,0"
+                         Watermark="Password" PasswordChar="#"
+                         x:Name="Tpassword"
+                         /> 
+            
+                <TextBox Grid.Column="1"  
+                         
+                         Margin="0,0,10,0"
+                         x:Name="Tuser"
+                         Watermark="User" /> 
+                
+                <TextBox Grid.Column="2"   
+                         
+                         x:Name="Tip"
+                         Watermark="Ip Address" 
+                         
+                         
+                         /> 
+            </Grid >
+            
+            <Grid x:Name="MysqlSettings0" IsVisible="False" Margin="0,25,0,25">
+           
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions >
+                
+                <TextBox Grid.Column="0"  
+                         
+                         
+                         Margin="0,0,10,0"
+                         Watermark="Password MysSql" PasswordChar="#"
+                         x:Name="MysqlTpassword"
+                /> 
+            
+                <TextBox Grid.Column="1"  
+                         
+                         Margin="0,0,10,0"
+                         x:Name="MysqlTuser"
+                         Watermark="User MySql" /> 
+                
+                <TextBox Grid.Column="2"   
+                         
+                         x:Name="MysqlTip"
+                         Watermark="Ip Address MySql" 
+                         
+                         
+                /> 
+            </Grid >
+            
+            
+            
+            <Grid x:Name="MysqlSettings1" IsVisible="False"  Margin="0,0,0,0">
+           
+                <Grid.ColumnDefinitions >
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions >
+                
+                <TextBox Grid.Column="0"   
+                         
+                         Margin="0,0,10,0"
+                         
+                         x:Name="TnameTable"
+                         
+                         Watermark="Name Table" /> 
+            
+                <TextBox Grid.Column="1"
+                         
+                         Margin="0,0,10,0"
+                         
+                         x:Name="TDataBase"
+                         
+                         Watermark="DataBase" 
+                         
+                         /> 
+            
+                <TextBox Grid.Column="2"  
+                         
+                         x:Name="Tport"
+                         Watermark="Port" 
+                         /> 
+           
+            
+            </Grid >    
+
+            
+        </StackPanel>
+
+             
+       
+              
+        <Grid VerticalAlignment="Bottom" Margin="0,50,0,0">
+    
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions >
+                
+            
+            
+            <CheckBox  
+                x:Name="CheckBoxMySql"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Stretch"
+                Grid.Column="2"
+                Click="CheckBoxMySql_OnClick"
+         
+                Content="Get from MySql"/> 
+
+      
+            
+            <CheckBox  
+                x:Name="CheckBoxServer"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Stretch"
+                Grid.Column="0"
+                Click="CheckBoxServer_OnClick"
+        
+                
+                Margin="0,0,10,0"
+                Content="Server"/> 
+            
+          
+           
+            <Button        
+                Click="Button_OnClick"
+                x:Name="Button" VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Stretch"
+                Grid.Column="1" Content="Save"
+                Margin="0,0,10,0"
+            ></Button>
+            
+           
+            
+        </Grid > 
+ 
+      
+        
+    </Grid>
+
+
+
+</Window>
