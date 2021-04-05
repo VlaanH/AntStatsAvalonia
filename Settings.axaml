@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="385" 
         x:Class="AntStats.Avalonia.SettingsW"
         WindowStartupLocation="CenterScreen"
-        Title="" Background="#1e2124" MinWidth="450" MinHeight="280" MaxHeight="350" MaxWidth="800">
+        Title="" Background="#1e2124" MinWidth="600" MinHeight="280" MaxHeight="380" MaxWidth="800">
 
 
     
@@ -24,7 +24,6 @@
                 </Grid.ColumnDefinitions >
                 
                 <TextBox Grid.Column="0"  
-                         
                          
                          Margin="0,0,10,0"
                          Watermark="Password" PasswordChar="#"
@@ -126,8 +125,20 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions >
                 
+            
+            <Button        
+                Click="ButtonTable_OnClick"
+                x:Name="ButtonTable" VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Stretch"
+                Grid.Column="0" Content="Сreate table"
+                Margin="0,0,10,0"
+            ></Button>
+
+            
             
             
             <CheckBox  
@@ -147,7 +158,7 @@
                 VerticalAlignment="Stretch"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 HorizontalAlignment="Stretch"
-                Grid.Column="0"
+                Grid.Column="1"
                 Click="CheckBoxServer_OnClick"
         
                 
@@ -161,11 +172,13 @@
                 x:Name="Button" VerticalAlignment="Stretch"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 HorizontalAlignment="Stretch"
-                Grid.Column="1" Content="Save"
+                Grid.Column="3" Content="Save"
                 Margin="0,0,10,0"
             ></Button>
             
            
+            
+            
             
         </Grid > 
  

@@ -10,12 +10,11 @@ namespace AntStats.Avalonia.Database
     public class MySQL : IDatabase
     {
 
-       private static void updateData(string connector,string ColumnName,int ColumnId,string Data,string table)
+       private static void updateData(string connector,string ColumnName,int ColumnId,string Data,string nameTable)
         {
             new Thread(() =>
             {
-                
-                
+           
                 //Sometimes errors occur when trying to update data. This code is needed to minimize this.
                 bool error = false;
                 for (int i =0;error||i<10;i++)
@@ -24,7 +23,7 @@ namespace AntStats.Avalonia.Database
                     {
                         MySqlConnection mySqlConnection = new MySqlConnection(connector);
                         mySqlConnection.Open();
-                        string Commondq = $"UPDATE {table} SET {ColumnName}='{Data}' WHERE id = '{ColumnId}'";
+                        string Commondq = $"UPDATE {nameTable} SET {ColumnName}='{Data}' WHERE id = '{ColumnId}'";
                         MySqlCommand command = new MySqlCommand(Commondq,mySqlConnection);
                         command.ExecuteNonQuery();
                         mySqlConnection.Close();
@@ -39,20 +38,91 @@ namespace AntStats.Avalonia.Database
                    
                 }
                 
-               
- 
             }).Start();
           
         }
 
-        public AsicStandartStatsObject GetAsicColumnData(string connector,string table)
+
+       private bool tablePresenceInDatabase(string nameTable,string connector,string database)
+       {
+           try
+           {
+               MySqlConnection mySqlConnection = new MySqlConnection(connector);
+               mySqlConnection.Open();
+               MySqlCommand command = new MySqlCommand($"SELECT * FROM {database}."+nameTable,mySqlConnection);
+
+               MySqlDataReader reader = command.ExecuteReader();
+               mySqlConnection.Close();
+           }
+           catch (Exception e)
+           {
+    
+               return false;
+           }
+         
+
+           return true;
+       }
+
+
+
+
+
+
+
+
+       public void CreateTable(string connector,string nameTable,string database)
+       {
+           if (tablePresenceInDatabase(nameTable, connector, database) == false)
+           {
+               string table =
+                   $"CREATE TABLE `{database}`.`{nameTable}` (" +
+                   "`Chain` VARCHAR(45) NULL," +
+                   "`Frequency` VARCHAR(45) NULL," +
+                   "`Watts` VARCHAR(45) NULL," +
+                   "`GHideal` VARCHAR(45) NULL," +
+                   "`GHRT` VARCHAR(45) NULL, " +
+                   "`HW` VARCHAR(45) NULL, " +
+                   "`TempPCB` VARCHAR(45) NULL, " +
+                   "`TempChip` VARCHAR(45) NULL, " +
+                   "`Status` VARCHAR(45) NULL," +
+                   "`id` INTEGER NOT NULL)";
+               
+               
+               MySqlConnection mySqlConnection = new MySqlConnection(connector);
+  
+               mySqlConnection.Open();
+               MySqlCommand command = new MySqlCommand(table,mySqlConnection);
+               command.ExecuteNonQuery();
+               mySqlConnection.Close();
+
+
+               for (int i = 0; i <= 10; i++)
+               {
+                   string addColumn = $"INSERT INTO `{database}`.`{nameTable}` (`id`) VALUES ('{i}')";
+                   mySqlConnection.Open();
+                   new MySqlCommand(addColumn,mySqlConnection).ExecuteNonQuery();
+                   mySqlConnection.Close();
+               }
+            
+               
+               
+               
+           }
+
+
+       }
+
+
+
+       public AsicStandartStatsObject GetAsicColumnData(string connector,string nameTable)
         {
             AsicStandartStatsObject asicsObject=new AsicStandartStatsObject();
             
             MySqlConnection mySqlConnection = new MySqlConnection(connector);
             
             mySqlConnection.Open();
-            MySqlCommand command = new MySqlCommand("SELECT * FROM asic."+table,mySqlConnection);
+            MySqlCommand command = new MySqlCommand("SELECT * FROM asic."+nameTable,mySqlConnection);
 
             MySqlDataReader reader = command.ExecuteReader();
 
@@ -94,29 +164,39 @@ namespace AntStats.Avalonia.Database
             return asicsObject;
         }
 
+        
+        //SELECT * from asic_tabl
+        
+        
+        
+        
+        
+        
+        
+        
         public void SetAsicColumnData(string connectionString, AsicStandartStatsObject column,string table)
         {
             for (int i = 0; i <= 8; i++)
             {
              
-                updateData(connectionString, "Chain", i+1,column.LasicAsicColumnStats[i].Chain,table);
-                updateData(connectionString, "Frequency", i+1,column.LasicAsicColumnStats[i].Frequency,table);
-                updateData(connectionString, "Watts", i+1,column.LasicAsicColumnStats[i].Watts,table);
-                updateData(connectionString, "GHideal", i+1,column.LasicAsicColumnStats[i].GHideal,table);
-                updateData(connectionString, "GHRT", i+1,column.LasicAsicColumnStats[i].GHRT,table);
-                updateData(connectionString, "HW", i+1,column.LasicAsicColumnStats[i].HW,table);
-                updateData(connectionString, "TempPCB", i+1,column.LasicAsicColumnStats[i].TempPCB,table);
-                updateData(connectionString, "TempChip", i+1,column.LasicAsicColumnStats[i].TempChip,table);
-                updateData(connectionString, "Status", i+1,column.LasicAsicColumnStats[i].Status,table);
+                updateData(connectionString, "Chain", i,column.LasicAsicColumnStats[i].Chain,table);
+                updateData(connectionString, "Frequency", i,column.LasicAsicColumnStats[i].Frequency,table);
+                updateData(connectionString, "Watts", i,column.LasicAsicColumnStats[i].Watts,table);
+                updateData(connectionString, "GHideal", i,column.LasicAsicColumnStats[i].GHideal,table);
+                updateData(connectionString, "GHRT", i,column.LasicAsicColumnStats[i].GHRT,table);
+                updateData(connectionString, "HW", i,column.LasicAsicColumnStats[i].HW,table);
+                updateData(connectionString, "TempPCB", i,column.LasicAsicColumnStats[i].TempPCB,table);
+                updateData(connectionString, "TempChip", i,column.LasicAsicColumnStats[i].TempChip,table);
+                updateData(connectionString, "Status", i,column.LasicAsicColumnStats[i].Status,table);
               
             } 
             
         
 
-            //updateData(connectionString, "Watts", 9,column.);
-            updateData(connectionString, "Status", 9+1,column.ElapsedTime,table);
-            updateData(connectionString, "GHRT", 9+1,column.HashrateAVG,table);
-            updateData(connectionString, "Chain", 9+1,column.DateTime,table);
+       
+            updateData(connectionString, "Status", 9,column.ElapsedTime,table);
+            updateData(connectionString, "GHRT", 9,column.HashrateAVG,table);
+            updateData(connectionString, "Chain", 9,column.DateTime,table);
             
             
             

@@ -1,4 +1,5 @@
 using System.Threading;
+using System.Threading.Tasks;
 using AntStats.Avalonia.Database;
 
 namespace AntStats.Avalonia
@@ -13,6 +14,29 @@ namespace AntStats.Avalonia
         }
 
 
+        public async void CreateMySqlTable()
+        {
+          
+        
+            string connector=$"Server={Settings.MysqlIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.MysqlUser};pwd={Settings.MysqlPass};charset=utf8";
+
+            
+            await Task.Run(() =>
+            {
+                Database.MySQL mySql = new MySQL();
+                
+                mySql.CreateTable(connector,Settings.NameTable,Settings.DataBaseName);
+
+            });
+
+      
+            
+        }
+        
+        
+        
+        
+        
         public AsicStandartStatsObject GetLocalhost()
         {
             var html = ParsingAuthorizationWeb.DownloadString($"http://{Settings.IP}/cgi-bin/minerStatus.cgi", Settings.User,

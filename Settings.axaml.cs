@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using AntStats.Avalonia.Database;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
@@ -201,6 +202,18 @@ namespace AntStats.Avalonia
             }
             
             GetCheckBox("CheckBoxMySql").IsChecked = false;
+        }
+
+        private async void ButtonTable_OnClick(object? sender, RoutedEventArgs e)
+        {
+
+            var settingsClass = GetSetting();
+            
+            GetAsicStats asicStats = new GetAsicStats(settingsClass);
+
+            asicStats.CreateMySqlTable();
+            
+            Settings.Save(settingsClass);
         }
     }
 }
