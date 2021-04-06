@@ -165,13 +165,7 @@ namespace AntStats.Avalonia.Database
         }
 
         
-        //SELECT * from asic_tabl
-        
-        
-        
-        
-        
-        
+  
         
         
         public void SetAsicColumnData(string connectionString, AsicStandartStatsObject column,string table)

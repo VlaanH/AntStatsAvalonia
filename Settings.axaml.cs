@@ -164,42 +164,15 @@ namespace AntStats.Avalonia
 
         private void CheckBoxMySql_OnClick(object? sender, RoutedEventArgs e)
         {
-            if (GetCheckBox("CheckBoxMySql").IsChecked==true)
-            {
-
-                this.FindControl<Grid>("MysqlSettings0").IsVisible = true;
-                this.FindControl<Grid>("MysqlSettings1").IsVisible = true;
-            }
-            else
-            {
-                this.FindControl<Grid>("MysqlSettings0").IsVisible = false;
-                this.FindControl<Grid>("MysqlSettings1").IsVisible = false;
-            }
-
-          
-
+    
 
             GetCheckBox("CheckBoxServer").IsChecked = false;
-
-
-
+            
 
         }
 
         private void CheckBoxServer_OnClick(object? sender, RoutedEventArgs e)
         {
-            
-            if (GetCheckBox("CheckBoxServer").IsChecked==true)
-            {
-
-                this.FindControl<Grid>("MysqlSettings0").IsVisible = true;
-                this.FindControl<Grid>("MysqlSettings1").IsVisible = true;
-            }
-            else
-            {
-                this.FindControl<Grid>("MysqlSettings0").IsVisible = false;
-                this.FindControl<Grid>("MysqlSettings1").IsVisible = false;
-            }
             
             GetCheckBox("CheckBoxMySql").IsChecked = false;
         }

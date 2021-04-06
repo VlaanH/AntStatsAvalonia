@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="385" 
         x:Class="AntStats.Avalonia.SettingsW"
         WindowStartupLocation="CenterScreen"
-        Title="" Background="#1e2124" MinWidth="600" MinHeight="280" MaxHeight="380" MaxWidth="800">
+        Title="" Background="#1e2124" MinWidth="600" MinHeight="350" MaxHeight="380" MaxWidth="800">
 
 
     
@@ -45,7 +45,7 @@
                          /> 
             </Grid >
             
-            <Grid x:Name="MysqlSettings0" IsVisible="False" Margin="0,25,0,25">
+            <Grid x:Name="MysqlSettings0" Margin="0,25,0,25">
            
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition />
@@ -78,7 +78,7 @@
             
             
             
-            <Grid x:Name="MysqlSettings1" IsVisible="False"  Margin="0,0,0,0">
+            <Grid x:Name="MysqlSettings1" Margin="0,0,0,0">
            
                 <Grid.ColumnDefinitions >
                     <ColumnDefinition />
@@ -112,12 +112,26 @@
            
             
             </Grid >    
-
+            <Grid IsVisible="False" Margin="0,30,0,0">
+    
+               
+                <Grid.RowDefinitions >
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions >
+                
+                <Label HorizontalAlignment="Center" Content="Creating Table" Grid.Row="0"></Label>
+                <ProgressBar Grid.Row="1"></ProgressBar>
+           
+            
+            
+            
+            </Grid > 
             
         </StackPanel>
 
              
-       
+     
               
         <Grid VerticalAlignment="Bottom" Margin="0,50,0,0">
     
@@ -183,6 +197,10 @@
         </Grid > 
  
       
+      
+        
+        
+        
         
     </Grid>
 
