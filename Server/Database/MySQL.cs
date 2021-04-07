@@ -73,8 +73,10 @@ namespace AntStats.Avalonia.Database
 
        public void CreateTable(string connector,string nameTable,string database)
        {
+          
+           ProgressBarCreatingData.CreatingTable++;
            if (tablePresenceInDatabase(nameTable, connector, database) == false)
-           {
+           { ProgressBarCreatingData.CreatingTable++;
                string table =
                    $"CREATE TABLE `{database}`.`{nameTable}` (" +
                    "`Chain` VARCHAR(45) NULL," +
@@ -90,15 +92,20 @@ namespace AntStats.Avalonia.Database
                
                
                MySqlConnection mySqlConnection = new MySqlConnection(connector);
-  
+               ProgressBarCreatingData.CreatingTable++;
+               
+               
                mySqlConnection.Open();
+               ProgressBarCreatingData.CreatingTable++;
                MySqlCommand command = new MySqlCommand(table,mySqlConnection);
                command.ExecuteNonQuery();
+               ProgressBarCreatingData.CreatingTable++;
                mySqlConnection.Close();
-
+               ProgressBarCreatingData.CreatingTable++;
 
                for (int i = 0; i <= 10; i++)
                {
+                   ProgressBarCreatingData.CreatingTable++;
                    string addColumn = $"INSERT INTO `{database}`.`{nameTable}` (`id`) VALUES ('{i}')";
                    mySqlConnection.Open();
                    new MySqlCommand(addColumn,mySqlConnection).ExecuteNonQuery();

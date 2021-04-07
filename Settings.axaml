@@ -112,7 +112,7 @@
            
             
             </Grid >    
-            <Grid IsVisible="False" Margin="0,30,0,0">
+            <Grid IsVisible="True" Margin="0,30,0,0">
     
                
                 <Grid.RowDefinitions >
@@ -121,7 +121,12 @@
                 </Grid.RowDefinitions >
                 
                 <Label HorizontalAlignment="Center" Content="Creating Table" Grid.Row="0"></Label>
-                <ProgressBar Grid.Row="1"></ProgressBar>
+                <ProgressBar  
+                    Height="10" 
+                    Minimum="0" Name="BarTable"
+                    Grid.Row="1"
+                   
+                    />
            
             
             

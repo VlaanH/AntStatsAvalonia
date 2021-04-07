@@ -149,8 +149,6 @@ namespace AntStats.Avalonia
       
         private void Settings_OnClick(object? sender, RoutedEventArgs e)
         {
-           
-            
             SettingsW.Show(this);
         }
     }

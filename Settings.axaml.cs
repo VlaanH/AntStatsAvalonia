@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AntStats.Avalonia.Database;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
@@ -145,7 +146,6 @@ namespace AntStats.Avalonia
             
             
             return settings;
-            
         }
 
 
@@ -158,14 +158,28 @@ namespace AntStats.Avalonia
            
         }
 
+        private async void SetProgressBar()
+        {
+            
+            this.FindControl<Button>("ButtonTable").IsEnabled = false;
+            while (ProgressBarCreatingData.CreatingTable<17)
+            {
+                await Task.Delay(700);
+               this.FindControl<ProgressBar>("BarTable").Value=(int)(((double)ProgressBarCreatingData.CreatingTable/17)*100);
+              
+            }
 
-   
-        
+            this.FindControl<Button>("ButtonTable").IsEnabled = true;
+            
+            ProgressBarCreatingData.CreatingTable = 0;
+
+        }
+
+
 
         private void CheckBoxMySql_OnClick(object? sender, RoutedEventArgs e)
         {
-    
-
+            
             GetCheckBox("CheckBoxServer").IsChecked = false;
             
 
@@ -179,6 +193,10 @@ namespace AntStats.Avalonia
 
         private async void ButtonTable_OnClick(object? sender, RoutedEventArgs e)
         {
+
+
+
+            SetProgressBar();
 
             var settingsClass = GetSetting();
             
