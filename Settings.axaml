@@ -112,7 +112,7 @@
            
             
             </Grid >    
-            <Grid IsVisible="True" Margin="0,30,0,0">
+            <Grid IsVisible="false" x:Name="CreatingTable" Margin="0,30,0,0">
     
                
                 <Grid.RowDefinitions >

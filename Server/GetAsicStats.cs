@@ -14,20 +14,18 @@ namespace AntStats.Avalonia
         }
 
 
-        public async void CreateMySqlTable()
+        public bool CreateMySqlTable()
         {
           
         
             string connector=$"Server={Settings.MysqlIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.MysqlUser};pwd={Settings.MysqlPass};charset=utf8";
 
             
-            await Task.Run(() =>
-            {
-                Database.MySQL mySql = new MySQL();
+           
+            Database.MySQL mySql = new MySQL();
                 
-                mySql.CreateTable(connector,Settings.NameTable,Settings.DataBaseName);
+            return mySql.CreateTable(connector,Settings.NameTable,Settings.DataBaseName);
 
-            });
 
       
             

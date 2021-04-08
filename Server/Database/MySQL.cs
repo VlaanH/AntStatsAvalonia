@@ -71,10 +71,10 @@ namespace AntStats.Avalonia.Database
 
 
 
-       public void CreateTable(string connector,string nameTable,string database)
+       public bool CreateTable(string connector,string nameTable,string database)
        {
           
-           ProgressBarCreatingData.CreatingTable++;
+         
            if (tablePresenceInDatabase(nameTable, connector, database) == false)
            { ProgressBarCreatingData.CreatingTable++;
                string table =
@@ -110,14 +110,15 @@ namespace AntStats.Avalonia.Database
                    mySqlConnection.Open();
                    new MySqlCommand(addColumn,mySqlConnection).ExecuteNonQuery();
                    mySqlConnection.Close();
+                   
                }
             
-               
-               
-               
+               ProgressBarCreatingData.CreatingTable++;
+
+               return true;
            }
 
-
+           return false;
        }
 
 

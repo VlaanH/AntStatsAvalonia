@@ -158,10 +158,13 @@ namespace AntStats.Avalonia
            
         }
 
-        private async void SetProgressBar()
+        private async void EnabledProgressBar()
         {
             
             this.FindControl<Button>("ButtonTable").IsEnabled = false;
+            
+            this.FindControl<Grid>("CreatingTable").IsVisible = true;
+            
             while (ProgressBarCreatingData.CreatingTable<17)
             {
                 await Task.Delay(700);
@@ -171,8 +174,11 @@ namespace AntStats.Avalonia
 
             this.FindControl<Button>("ButtonTable").IsEnabled = true;
             
+            this.FindControl<Grid>("CreatingTable").IsVisible = false;
             ProgressBarCreatingData.CreatingTable = 0;
 
+            
+            
         }
 
 
@@ -194,15 +200,37 @@ namespace AntStats.Avalonia
         private async void ButtonTable_OnClick(object? sender, RoutedEventArgs e)
         {
 
-
-
-            SetProgressBar();
+           
+            
+          
 
             var settingsClass = GetSetting();
             
             GetAsicStats asicStats = new GetAsicStats(settingsClass);
+            
+            
+            EnabledProgressBar();
+            
+            bool createTableRes=false;
+            await Task.Run(() =>
+            {
+                createTableRes = asicStats.CreateMySqlTable();
+                
+                
+            });
+            
+   
+            if (createTableRes==false)
+            {
+                this.FindControl<Grid>("CreatingTable").IsVisible = false;
+                this.FindControl<Button>("ButtonTable").IsEnabled = true;
+            }
+            
+            
+       
 
-            asicStats.CreateMySqlTable();
+
+           
             
             Settings.Save(settingsClass);
         }
