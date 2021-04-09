@@ -163,7 +163,12 @@ namespace AntStats.Avalonia
             
             this.FindControl<Button>("ButtonTable").IsEnabled = false;
             
-            this.FindControl<Grid>("CreatingTable").IsVisible = true;
+            
+            this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = true;
+            this.FindControl<Label>("CreatingTableLabel").Content = "Creating Table";
+            this.FindControl<Label>("CreatingTableLabel").IsVisible = true;
+
+          
             
             while (ProgressBarCreatingData.CreatingTable<17)
             {
@@ -174,7 +179,11 @@ namespace AntStats.Avalonia
 
             this.FindControl<Button>("ButtonTable").IsEnabled = true;
             
-            this.FindControl<Grid>("CreatingTable").IsVisible = false;
+            
+            
+            
+            this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
+            this.FindControl<Label>("CreatingTableLabel").IsVisible = false;
             ProgressBarCreatingData.CreatingTable = 0;
 
             
@@ -222,7 +231,12 @@ namespace AntStats.Avalonia
    
             if (createTableRes==false)
             {
-                this.FindControl<Grid>("CreatingTable").IsVisible = false;
+                this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
+                this.FindControl<Label>("CreatingTableLabel").Content = "The table already exists";
+                
+                
+       
+                
                 this.FindControl<Button>("ButtonTable").IsEnabled = true;
             }
             
