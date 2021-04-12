@@ -47,7 +47,7 @@ namespace AntStats.Avalonia
             for (int i = 1; i < 10; i++)
             {  
                 
-                var label = CustomLabel.AddLabel(columnName+i);
+                var label = CustomItem.AddLabel(columnName+i);
                 this.FindControl<Grid>("MainW").Children.Add(label);
                 Grid.SetColumn(label, columnId);
                 Grid.SetRow(label, i);
@@ -99,7 +99,36 @@ namespace AntStats.Avalonia
 
 
 
+        private async void EnabledProgressBar(int maxValue)
+        {
 
+            this.FindControl<Button>("ButtonStats").IsEnabled = false;
+            
+            
+            this.FindControl<ProgressBar>("DatabaseProgressBar").IsVisible = true;
+            this.FindControl<Label>("DatabaseProgressBarText").IsVisible = true;
+
+          
+            
+            while (ProgressBarCreatingData.SettingMySqlData<maxValue)
+            {
+                await Task.Delay(700);
+                this.FindControl<ProgressBar>("DatabaseProgressBar").Value=(int)(((double)ProgressBarCreatingData.SettingMySqlData/maxValue)*100);
+        
+            }
+
+            this.FindControl<Button>("ButtonStats").IsEnabled = true;
+            
+            
+            
+            
+            this.FindControl<ProgressBar>("DatabaseProgressBar").IsVisible = false;
+            this.FindControl<Label>("DatabaseProgressBarText").IsVisible = false;
+            ProgressBarCreatingData.SettingMySqlData = 0;
+            this.FindControl<ProgressBar>("DatabaseProgressBar").Value = 0;
+
+
+        }
 
 
       
@@ -112,8 +141,13 @@ namespace AntStats.Avalonia
 
         
                AsicStandartStatsObject statsObject = new AsicStandartStatsObject();
+               SettingsClass settings=new SettingsClass();
+               await Task.Run(() =>
+               {  settings = Settings.Get().Result; });
 
-             
+                  
+               if(settings.Server==true)
+                EnabledProgressBar(84); 
                
                await Task.Run(() =>
                {
@@ -136,8 +170,10 @@ namespace AntStats.Avalonia
                    
                    if(getSettings.Result.Server==true)
                        getAsicStats.SetMySql(statsObject);
-                   
 
+
+
+                  
                });
 
              

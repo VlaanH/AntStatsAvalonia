@@ -24,15 +24,15 @@ namespace AntStats.Avalonia
         {
             AvaloniaXamlLoader.Load(this);
 
-            loaudingSettings();
+            LoaudingSettings();
         }
 
-       async void loaudingSettings ()
+        async void LoaudingSettings ()
         {
             
-                var settings =  await Settings.Get();
+            var settings =  await Settings.Get();
       
-                SetSetting(settings); 
+            SetSetting(settings); 
          
             
         }
@@ -158,6 +158,7 @@ namespace AntStats.Avalonia
            
         }
 
+       
         private async void EnabledProgressBar()
         {
             
@@ -170,20 +171,23 @@ namespace AntStats.Avalonia
 
           
             
-            while (ProgressBarCreatingData.CreatingTable<17)
+            while (ProgressBarCreatingData.CreatingTable<17 & ProgressBarCreatingData.CreatingTable>-1)
             {
                 await Task.Delay(700);
-               this.FindControl<ProgressBar>("BarTable").Value=(int)(((double)ProgressBarCreatingData.CreatingTable/17)*100);
+                this.FindControl<ProgressBar>("CreatingTableProgressBar").Value=(int)(((double)ProgressBarCreatingData.CreatingTable/17)*100);
               
             }
 
             this.FindControl<Button>("ButtonTable").IsEnabled = true;
+
+
+            if (ProgressBarCreatingData.CreatingTable==17)
+            {
+                this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
+                this.FindControl<Label>("CreatingTableLabel").IsVisible = false; 
+            }
             
-            
-            
-            
-            this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
-            this.FindControl<Label>("CreatingTableLabel").IsVisible = false;
+          
             ProgressBarCreatingData.CreatingTable = 0;
 
             
@@ -209,32 +213,28 @@ namespace AntStats.Avalonia
         private async void ButtonTable_OnClick(object? sender, RoutedEventArgs e)
         {
 
-           
-            
-          
-
             var settingsClass = GetSetting();
             
             GetAsicStats asicStats = new GetAsicStats(settingsClass);
-            
-            
+
+
             EnabledProgressBar();
-            
+
+        
             bool createTableRes=false;
             await Task.Run(() =>
             {
                 createTableRes = asicStats.CreateMySqlTable();
-                
-                
             });
             
-   
+            
+            //if the table already exists
             if (createTableRes==false)
             {
                 this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
                 this.FindControl<Label>("CreatingTableLabel").Content = "The table already exists";
-                
-                
+
+                ProgressBarCreatingData.CreatingTable = -2;
        
                 
                 this.FindControl<Button>("ButtonTable").IsEnabled = true;

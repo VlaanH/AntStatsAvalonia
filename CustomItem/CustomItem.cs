@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Layout;
@@ -6,14 +7,14 @@ using Avalonia.Media;
 
 namespace AntStats.Avalonia
 {
-    public class CustomLabel
+    public class CustomItem
     {
-        public static Label AddLabel(string namelabel)
+        public static Label AddLabel(string nameLabel)
         {
             Label labelCustom = new Label();
             
-            labelCustom.Content = String.Format(namelabel);
-            labelCustom.Name = String.Format(namelabel);
+            labelCustom.Content = String.Format(nameLabel);
+            labelCustom.Name = String.Format(nameLabel);
             labelCustom.VerticalAlignment = VerticalAlignment.Stretch;
             labelCustom.Content = "-";
             labelCustom.FontSize = 16;
@@ -25,6 +26,9 @@ namespace AntStats.Avalonia
             labelCustom.Background = AppStandartData.StandartColorBrush;
             return labelCustom;
         }
+
+
+
 
     }
 }

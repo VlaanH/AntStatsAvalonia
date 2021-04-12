@@ -14,7 +14,7 @@ namespace AntStats.Avalonia.Database
         {
             new Thread(() =>
             {
-           
+               
                 //Sometimes errors occur when trying to update data. This code is needed to minimize this.
                 bool error = false;
                 for (int i =0;error||i<10;i++)
@@ -37,7 +37,8 @@ namespace AntStats.Avalonia.Database
                     
                    
                 }
-                
+
+                ProgressBarCreatingData.SettingMySqlData++;
             }).Start();
           
         }
@@ -124,7 +125,8 @@ namespace AntStats.Avalonia.Database
 
 
        public AsicStandartStatsObject GetAsicColumnData(string connector,string nameTable)
-        {
+       {
+         
             AsicStandartStatsObject asicsObject=new AsicStandartStatsObject();
             
             MySqlConnection mySqlConnection = new MySqlConnection(connector);
@@ -180,7 +182,7 @@ namespace AntStats.Avalonia.Database
         {
             for (int i = 0; i <= 8; i++)
             {
-             
+
                 updateData(connectionString, "Chain", i,column.LasicAsicColumnStats[i].Chain,table);
                 updateData(connectionString, "Frequency", i,column.LasicAsicColumnStats[i].Frequency,table);
                 updateData(connectionString, "Watts", i,column.LasicAsicColumnStats[i].Watts,table);

@@ -124,10 +124,10 @@
                 <ProgressBar  
                     x:Name="CreatingTableProgressBar"
                     Height="10" 
-                    Minimum="0" Name="BarTable"
+                    Minimum="0" 
                     Grid.Row="1"
                     IsVisible="False"
-                    />
+                />
            
             
             

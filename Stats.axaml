@@ -159,7 +159,7 @@
                 <Button           
                        
                        Click="Button_OnClick"
-                        x:Name="Button" VerticalAlignment="Stretch"
+                        x:Name="ButtonStats" VerticalAlignment="Stretch"
                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                         HorizontalAlignment="Stretch"
                         Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="5" Content="GET"
@@ -181,7 +181,12 @@
             
                
              
-               
+               <Grid Grid.Row="11" Grid.ColumnSpan="2" >  
+                      <ProgressBar  x:Name="DatabaseProgressBar" IsVisible="False"/>
+                      <Label HorizontalAlignment="Center" x:Name="DatabaseProgressBarText" IsVisible="False" VerticalAlignment="Center">
+                             Database update
+                      </Label>
+               </Grid>
 
         </Grid>
 </Window>
