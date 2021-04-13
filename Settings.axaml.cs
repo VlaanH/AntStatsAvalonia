@@ -37,9 +37,9 @@ namespace AntStats.Avalonia
             
         }
 
-       private CheckBox GetCheckBox(string name)
+       private ToggleSwitch GetCToggleSwitch(string name)
        {
-           return this.FindControl<CheckBox>(name);
+           return this.FindControl<ToggleSwitch>(name);
        }
     
 
@@ -89,7 +89,7 @@ namespace AntStats.Avalonia
             
             if (settings.DataBase != null)
             {
-                GetCheckBox("CheckBoxMySql").IsChecked = settings.DataBase;
+                GetCToggleSwitch("ToggleSwitchMySql").IsChecked = settings.DataBase;
 
                 if (settings.DataBase == true)
                 {
@@ -102,7 +102,7 @@ namespace AntStats.Avalonia
 
             if (settings.Server != null)
             {
-                GetCheckBox("CheckBoxServer").IsChecked=settings.Server;
+                GetCToggleSwitch("ToggleSwitchServer").IsChecked=settings.Server;
 
                 if (settings.Server == true)
                 {
@@ -134,9 +134,9 @@ namespace AntStats.Avalonia
             
             settings.NameTable = GetTextBox("TnameTable").Text;
 
-            settings.DataBase = GetCheckBox("CheckBoxMySql").IsChecked.Value;
+            settings.DataBase = GetCToggleSwitch("ToggleSwitchMySql").IsChecked.Value;
             
-            settings.Server = GetCheckBox("CheckBoxServer").IsChecked.Value;
+            settings.Server = GetCToggleSwitch("ToggleSwitchServer").IsChecked.Value;
             
             settings.MysqlPass = GetTextBox("MysqlTpassword").Text;
             
@@ -159,7 +159,7 @@ namespace AntStats.Avalonia
         }
 
        
-        private async void EnabledProgressBar()
+        private async void EnabledProgressBar(int maxValue)
         {
             
             this.FindControl<Button>("ButtonTable").IsEnabled = false;
@@ -171,17 +171,17 @@ namespace AntStats.Avalonia
 
           
             
-            while (ProgressBarCreatingData.CreatingTable<17 & ProgressBarCreatingData.CreatingTable>-1)
+            while (ProgressBarCreatingData.CreatingTable<maxValue & ProgressBarCreatingData.CreatingTable>-1)
             {
                 await Task.Delay(700);
-                this.FindControl<ProgressBar>("CreatingTableProgressBar").Value=(int)(((double)ProgressBarCreatingData.CreatingTable/17)*100);
+                this.FindControl<ProgressBar>("CreatingTableProgressBar").Value=(int)(((double)ProgressBarCreatingData.CreatingTable/maxValue)*100);
               
             }
 
             this.FindControl<Button>("ButtonTable").IsEnabled = true;
 
 
-            if (ProgressBarCreatingData.CreatingTable==17)
+            if (ProgressBarCreatingData.CreatingTable==maxValue)
             {
                 this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
                 this.FindControl<Label>("CreatingTableLabel").IsVisible = false; 
@@ -196,19 +196,6 @@ namespace AntStats.Avalonia
 
 
 
-        private void CheckBoxMySql_OnClick(object? sender, RoutedEventArgs e)
-        {
-            
-            GetCheckBox("CheckBoxServer").IsChecked = false;
-            
-
-        }
-
-        private void CheckBoxServer_OnClick(object? sender, RoutedEventArgs e)
-        {
-            
-            GetCheckBox("CheckBoxMySql").IsChecked = false;
-        }
 
         private async void ButtonTable_OnClick(object? sender, RoutedEventArgs e)
         {
@@ -218,7 +205,7 @@ namespace AntStats.Avalonia
             GetAsicStats asicStats = new GetAsicStats(settingsClass);
 
 
-            EnabledProgressBar();
+            EnabledProgressBar(17);
 
         
             bool createTableRes=false;
@@ -247,6 +234,16 @@ namespace AntStats.Avalonia
            
             
             Settings.Save(settingsClass);
+        }
+
+        private void ToggleSwitchMySql_OnClick(object? sender, RoutedEventArgs e)
+        {   GetCToggleSwitch("ToggleSwitchServer").IsChecked = false;
+            
+        }
+
+        private void ToggleSwitchServer_OnClick(object? sender, RoutedEventArgs e)
+        {
+            GetCToggleSwitch("ToggleSwitchMySql").IsChecked = false;
         }
     }
 }

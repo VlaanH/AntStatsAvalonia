@@ -147,7 +147,7 @@ namespace AntStats.Avalonia
 
                   
                if(settings.Server==true)
-                EnabledProgressBar(84); 
+                EnabledProgressBar(83); 
                
                await Task.Run(() =>
                {

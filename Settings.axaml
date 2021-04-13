@@ -161,29 +161,31 @@
             
             
             
-            <CheckBox  
-                x:Name="CheckBoxMySql"
+            <ToggleSwitch  
+                x:Name="ToggleSwitchMySql"
                 VerticalAlignment="Stretch"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 HorizontalAlignment="Stretch"
                 Grid.Column="2"
-                Click="CheckBoxMySql_OnClick"
-         
-                Content="Get from MySql"/> 
+                Click="ToggleSwitchMySql_OnClick"
+                OnContent="On from MySql"
+                OffContent="Off from MySql"
+              /> 
 
       
             
-            <CheckBox  
-                x:Name="CheckBoxServer"
+            <ToggleSwitch  
+                x:Name="ToggleSwitchServer"
                 VerticalAlignment="Stretch"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 HorizontalAlignment="Stretch"
                 Grid.Column="1"
-                Click="CheckBoxServer_OnClick"
+                Click="ToggleSwitchServer_OnClick"
         
                 
                 Margin="0,0,10,0"
-                Content="Server"/> 
+                OnContent="on Server"
+                OffContent="off Server"/> 
             
           
            

@@ -182,7 +182,7 @@
                
              
                <Grid Grid.Row="11" Grid.ColumnSpan="2" >  
-                      <ProgressBar  x:Name="DatabaseProgressBar" IsVisible="False"/>
+                      <ProgressBar  x:Name="DatabaseProgressBar"  Height="5" Minimum="0" IsVisible="False"/>
                       <Label HorizontalAlignment="Center" x:Name="DatabaseProgressBarText" IsVisible="False" VerticalAlignment="Center">
                              Database update
                       </Label>
