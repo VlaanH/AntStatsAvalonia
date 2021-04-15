@@ -5,7 +5,7 @@
         mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="385" 
         x:Class="AntStats.Avalonia.SettingsW"
         WindowStartupLocation="CenterScreen"
-        Title="" Background="#1e2124" MinWidth="600" MinHeight="350" MaxHeight="380" MaxWidth="800">
+        Title="" Background="#1e2124" MinWidth="650" MinHeight="350" MaxHeight="380" MaxWidth="800">
 
 
     

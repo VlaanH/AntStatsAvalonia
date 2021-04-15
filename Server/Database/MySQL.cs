@@ -12,13 +12,15 @@ namespace AntStats.Avalonia.Database
 
        private static void updateData(string connector,string ColumnName,int ColumnId,string Data,string nameTable)
         {
+            
             new Thread(() =>
             {
+                bool error = false;
                
                 //Sometimes errors occur when trying to update data. This code is needed to minimize this.
-                bool error = false;
-                for (int i =0;error||i<10;i++)
-                {
+               
+           
+                        
                     try
                     {
                         MySqlConnection mySqlConnection = new MySqlConnection(connector);
@@ -31,16 +33,27 @@ namespace AntStats.Avalonia.Database
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("Error MySQL");
-                        error = true;
-                    }
                     
-                   
-                }
+                        error = true;
+                      
+                            // Console.WriteLine("Error MySQL");
+                            ProgressBarCreatingData.SettingMySqlData = -2;
 
-                ProgressBarCreatingData.SettingMySqlData++;
+                        
+                    }
+
+                 
+                   
+                   
+             
+
+                if (error==false)
+                {
+                    ProgressBarCreatingData.SettingMySqlData++;
+                }
             }).Start();
-          
+
+           
         }
 
 
@@ -178,29 +191,51 @@ namespace AntStats.Avalonia.Database
   
         
         
-        public void SetAsicColumnData(string connectionString, AsicStandartStatsObject column,string table)
+        public async void SetAsicColumnData(string connectionString, AsicStandartStatsObject column,string table)
         {
             for (int i = 0; i <= 8; i++)
             {
 
-                updateData(connectionString, "Chain", i,column.LasicAsicColumnStats[i].Chain,table);
-                updateData(connectionString, "Frequency", i,column.LasicAsicColumnStats[i].Frequency,table);
-                updateData(connectionString, "Watts", i,column.LasicAsicColumnStats[i].Watts,table);
-                updateData(connectionString, "GHideal", i,column.LasicAsicColumnStats[i].GHideal,table);
-                updateData(connectionString, "GHRT", i,column.LasicAsicColumnStats[i].GHRT,table);
-                updateData(connectionString, "HW", i,column.LasicAsicColumnStats[i].HW,table);
-                updateData(connectionString, "TempPCB", i,column.LasicAsicColumnStats[i].TempPCB,table);
-                updateData(connectionString, "TempChip", i,column.LasicAsicColumnStats[i].TempChip,table);
-                updateData(connectionString, "Status", i,column.LasicAsicColumnStats[i].Status,table);
-              
+                if (ProgressBarCreatingData.SettingMySqlData != -2)
+                { 
+                    
+                    updateData(connectionString, "Chain", i, column.LasicAsicColumnStats[i].Chain, table);
+                    updateData(connectionString, "Frequency", i, column.LasicAsicColumnStats[i].Frequency, table);
+                    updateData(connectionString, "Watts", i, column.LasicAsicColumnStats[i].Watts, table);
+                    await Task.Delay(500);
+                }
+                if (ProgressBarCreatingData.SettingMySqlData != -2)
+                { 
+                    updateData(connectionString, "GHideal", i,column.LasicAsicColumnStats[i].GHideal,table);
+                    updateData(connectionString, "GHRT", i,column.LasicAsicColumnStats[i].GHRT,table);
+                    updateData(connectionString, "HW", i,column.LasicAsicColumnStats[i].HW,table);
+                    await Task.Delay(500);
+                    
+                }
+
+                if (ProgressBarCreatingData.SettingMySqlData != -2)
+                {
+                    updateData(connectionString, "TempPCB", i,column.LasicAsicColumnStats[i].TempPCB,table);
+                    updateData(connectionString, "TempChip", i,column.LasicAsicColumnStats[i].TempChip,table);
+                    updateData(connectionString, "Status", i,column.LasicAsicColumnStats[i].Status,table);
+                    await Task.Delay(500);
+                }
+
+                
+                
+               
             } 
             
         
 
-       
-            updateData(connectionString, "Status", 9,column.ElapsedTime,table);
-            updateData(connectionString, "GHRT", 9,column.HashrateAVG,table);
-            updateData(connectionString, "Chain", 9,column.DateTime,table);
+            if (ProgressBarCreatingData.SettingMySqlData != -2)
+            { 
+                updateData(connectionString, "Status", 9,column.ElapsedTime,table);
+                updateData(connectionString, "GHRT", 9,column.HashrateAVG,table);
+                updateData(connectionString, "Chain", 9,column.DateTime,table);
+                
+            }
+           
             
             
             

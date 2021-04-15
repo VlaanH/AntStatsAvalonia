@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AntStats.Avalonia.Database;
@@ -66,12 +67,9 @@ namespace AntStats.Avalonia
             string connector=$"Server={Settings.MysqlIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.MysqlUser};pwd={Settings.MysqlPass};charset=utf8";
             
             
-            new Thread(() =>
-            {
-               mySql.SetAsicColumnData(connector,statsObject,Settings.NameTable);
-
-            }).Start();
-
+          
+            mySql.SetAsicColumnData(connector,statsObject,Settings.NameTable);
+          
       
             
         }

@@ -107,16 +107,16 @@ namespace AntStats.Avalonia
             
             this.FindControl<ProgressBar>("DatabaseProgressBar").IsVisible = true;
             this.FindControl<Label>("DatabaseProgressBarText").IsVisible = true;
-
-          
-            
-            while (ProgressBarCreatingData.SettingMySqlData<maxValue)
-            {
+            this.FindControl<Label>("DatabaseProgressBarText").Content = "Database update";
+           
+           
+            while (ProgressBarCreatingData.SettingMySqlData<maxValue & ProgressBarCreatingData.SettingMySqlData>-2)
+            { 
                 await Task.Delay(700);
                 this.FindControl<ProgressBar>("DatabaseProgressBar").Value=(int)(((double)ProgressBarCreatingData.SettingMySqlData/maxValue)*100);
-        
+       
             }
-
+     
             this.FindControl<Button>("ButtonStats").IsEnabled = true;
             
             
@@ -124,60 +124,120 @@ namespace AntStats.Avalonia
             
             this.FindControl<ProgressBar>("DatabaseProgressBar").IsVisible = false;
             this.FindControl<Label>("DatabaseProgressBarText").IsVisible = false;
-            ProgressBarCreatingData.SettingMySqlData = 0;
             this.FindControl<ProgressBar>("DatabaseProgressBar").Value = 0;
 
+            if (ProgressBarCreatingData.SettingMySqlData==-2)
+            {
+                
+                ShowError("Server Error");
+                error = true;
+             
+            }
+           
+        }
 
+        private void ShowError(string errorText)
+        {
+            this.FindControl<ProgressBar>("DatabaseProgressBar").IsVisible = false;
+
+            this.FindControl<Label>("DatabaseProgressBarText").IsVisible = true;
+            this.FindControl<Label>("DatabaseProgressBarText").Content = errorText;
+            this.FindControl<Button>("ButtonStats").IsEnabled = true;
+            
         }
 
 
-      
 
 
-
-
+        private bool error = false;
         async void Button_OnClick(object? sender, RoutedEventArgs e)
-        {
-
-        
-               AsicStandartStatsObject statsObject = new AsicStandartStatsObject();
-               SettingsClass settings=new SettingsClass();
+        { ProgressBarCreatingData.SettingMySqlData = 0;
+            error = false;
+            ShowError(default);
+            GetAsicStats getAsicStats = default;
+            Task<SettingsClass> getSettings = default;
+            AsicStandartStatsObject statsObject = new AsicStandartStatsObject();
+            SettingsClass settings = new SettingsClass();
+               
                await Task.Run(() =>
                {  settings = Settings.Get().Result; });
 
                   
                if(settings.Server==true)
-                EnabledProgressBar(83); 
+                EnabledProgressBar(83);
+
+               
+
                
                await Task.Run(() =>
-               {
+                   { getSettings  = Settings.Get(); });
                    
-                   var getSettings = Settings.Get();
                    
-                   GetAsicStats getAsicStats = new GetAsicStats(getSettings.Result);
+               getAsicStats = new GetAsicStats(getSettings.Result);
+                   
+              
 
 
 
 
+
+             
+          
                    if (getSettings.Result.DataBase==true)
                    {
-                       statsObject = getAsicStats.GetMySql();
+
+                       try
+                       {
+                           await Task.Run(() => 
+                               { statsObject = getAsicStats.GetMySql(); });
+                       }
+                       catch (Exception exception)
+                       {
+                           ShowError("DataBase Error");
+                           error = true;
+                       }
+                      
+               
+                       
                    }
                    else
                    {
-                       statsObject = getAsicStats.GetLocalhost();
-                   }    
+                       try
+                       {
+                           await Task.Run(() =>
+                               { statsObject = getAsicStats.GetLocalhost(); });
+                       }
+                       catch (Exception exception)
+                       {
+                           ShowError("Localhost Error");
+                           error = true;
+                       }
+                      
+                      
+                       
+                       if (getSettings.Result.Server == true & error == false)
+                       {
+                          
+                               await Task.Run(() => 
+                                   { getAsicStats.SetMySql(statsObject); });
+
+                              
+                           
+                       }
+                       
+                   }
+
+                 
+
                    
-                   if(getSettings.Result.Server==true)
-                       getAsicStats.SetMySql(statsObject);
 
 
 
                   
-               });
-
              
-               SetAsicColumnTable(statsObject);
+
+                   if(error==false)
+                       SetAsicColumnTable(statsObject);
 
              
         }
