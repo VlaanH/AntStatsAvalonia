@@ -110,10 +110,10 @@ namespace AntStats.Avalonia
             this.FindControl<Label>("DatabaseProgressBarText").Content = "Database update";
            
            
-            while (ProgressBarCreatingData.SettingMySqlData<maxValue & ProgressBarCreatingData.SettingMySqlData>-2)
+            while (ProgressBarCreatingData.DataBase<maxValue & ProgressBarCreatingData.DataBaseError==false)
             { 
                 await Task.Delay(700);
-                this.FindControl<ProgressBar>("DatabaseProgressBar").Value=(int)(((double)ProgressBarCreatingData.SettingMySqlData/maxValue)*100);
+                this.FindControl<ProgressBar>("DatabaseProgressBar").Value=(int)(((double)ProgressBarCreatingData.DataBase/maxValue)*100);
        
             }
      
@@ -126,11 +126,11 @@ namespace AntStats.Avalonia
             this.FindControl<Label>("DatabaseProgressBarText").IsVisible = false;
             this.FindControl<ProgressBar>("DatabaseProgressBar").Value = 0;
 
-            if (ProgressBarCreatingData.SettingMySqlData==-2)
+            if (ProgressBarCreatingData.DataBaseError==true)
             {
                 
                 ShowError("Server Error");
-                error = true;
+                _errors = true;
              
             }
            
@@ -149,31 +149,34 @@ namespace AntStats.Avalonia
 
 
 
-        private bool error = false;
+        private bool _errors = false;
         async void Button_OnClick(object? sender, RoutedEventArgs e)
-        { ProgressBarCreatingData.SettingMySqlData = 0;
-            error = false;
+        {  
+            _errors = false;
             ShowError(default);
-            GetAsicStats getAsicStats = default;
-            Task<SettingsClass> getSettings = default;
+            ProgressBarCreatingData.DataBase = 0;ProgressBarCreatingData.DataBaseError = false;
             AsicStandartStatsObject statsObject = new AsicStandartStatsObject();
             SettingsClass settings = new SettingsClass();
+           
+            
+            
                
+            
+            
                await Task.Run(() =>
                {  settings = Settings.Get().Result; });
 
                   
                if(settings.Server==true)
-                EnabledProgressBar(83);
+                    EnabledProgressBar(83);
 
                
 
                
-               await Task.Run(() =>
-                   { getSettings  = Settings.Get(); });
+           
                    
                    
-               getAsicStats = new GetAsicStats(getSettings.Result);
+               AsicStats asicStats = new AsicStats(settings);
                    
               
 
@@ -183,46 +186,43 @@ namespace AntStats.Avalonia
 
              
           
-                   if (getSettings.Result.DataBase==true)
+                   if (settings.DataBase==true)
                    {
 
                        try
                        {
                            await Task.Run(() => 
-                               { statsObject = getAsicStats.GetMySql(); });
+                               { statsObject = asicStats.GetDataBase(); });
                        }
                        catch (Exception exception)
                        {
                            ShowError("DataBase Error");
-                           error = true;
+                           _errors = true;
                        }
                       
                
-                       
                    }
                    else
                    {
                        try
                        {
                            await Task.Run(() =>
-                               { statsObject = getAsicStats.GetLocalhost(); });
+                               { statsObject = asicStats.GetLocalhost(); });
                        }
                        catch (Exception exception)
                        {
                            ShowError("Localhost Error");
-                           error = true;
+                           _errors = true;
                        }
                       
                       
                        
-                       if (getSettings.Result.Server == true & error == false)
+                       if (settings.Server == true & _errors == false)
                        {
-                          
+                            
                                await Task.Run(() => 
-                                   { getAsicStats.SetMySql(statsObject); });
-
-                              
-                           
+                                   { asicStats.SetDataBase(statsObject); });
+                        
                        }
                        
                    }
@@ -236,7 +236,7 @@ namespace AntStats.Avalonia
                   
              
 
-                   if(error==false)
+                   if(_errors==false)
                        SetAsicColumnTable(statsObject);
 
              

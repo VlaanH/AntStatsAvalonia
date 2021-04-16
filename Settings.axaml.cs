@@ -202,7 +202,7 @@ namespace AntStats.Avalonia
 
             var settingsClass = GetSetting();
             
-            GetAsicStats asicStats = new GetAsicStats(settingsClass);
+            AsicStats asicStats = new AsicStats(settingsClass);
 
 
             EnabledProgressBar(17);

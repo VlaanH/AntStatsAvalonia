@@ -5,11 +5,11 @@ using AntStats.Avalonia.Database;
 
 namespace AntStats.Avalonia
 {
-    public class GetAsicStats
+    public class AsicStats
     {
         private SettingsClass Settings { get; set; }
 
-        public GetAsicStats(SettingsClass settings)
+        public AsicStats(SettingsClass settings)
         {
             Settings = settings;
         }
@@ -45,7 +45,7 @@ namespace AntStats.Avalonia
              return Html_In_AsicStandartStatsObject._Convert(html);
             
         }
-        public AsicStandartStatsObject GetMySql()
+        public AsicStandartStatsObject GetDataBase()
         {
           
             MySQL mySql = new MySQL();
@@ -59,7 +59,7 @@ namespace AntStats.Avalonia
 
       
         
-        public void SetMySql(AsicStandartStatsObject statsObject)
+        public void SetDataBase(AsicStandartStatsObject statsObject)
         {
           
             MySQL mySql = new MySQL();

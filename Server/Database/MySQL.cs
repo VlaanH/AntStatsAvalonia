@@ -15,12 +15,9 @@ namespace AntStats.Avalonia.Database
             
             new Thread(() =>
             {
-                bool error = false;
-               
-                //Sometimes errors occur when trying to update data. This code is needed to minimize this.
-               
            
-                        
+                    bool error = false;
+          
                     try
                     {
                         MySqlConnection mySqlConnection = new MySqlConnection(connector);
@@ -37,20 +34,17 @@ namespace AntStats.Avalonia.Database
                         error = true;
                       
                             // Console.WriteLine("Error MySQL");
-                            ProgressBarCreatingData.SettingMySqlData = -2;
+                            ProgressBarCreatingData.DataBaseError = true;
 
                         
                     }
 
-                 
-                   
-                   
-             
 
-                if (error==false)
-                {
-                    ProgressBarCreatingData.SettingMySqlData++;
-                }
+                    if (error==false)
+                    {
+                        ProgressBarCreatingData.DataBase++;
+                    }
+                    
             }).Start();
 
            
@@ -196,7 +190,7 @@ namespace AntStats.Avalonia.Database
             for (int i = 0; i <= 8; i++)
             {
 
-                if (ProgressBarCreatingData.SettingMySqlData != -2)
+                if (ProgressBarCreatingData.DataBaseError != true)
                 { 
                     
                     updateData(connectionString, "Chain", i, column.LasicAsicColumnStats[i].Chain, table);
@@ -204,7 +198,7 @@ namespace AntStats.Avalonia.Database
                     updateData(connectionString, "Watts", i, column.LasicAsicColumnStats[i].Watts, table);
                     await Task.Delay(500);
                 }
-                if (ProgressBarCreatingData.SettingMySqlData != -2)
+                if (ProgressBarCreatingData.DataBaseError != true)
                 { 
                     updateData(connectionString, "GHideal", i,column.LasicAsicColumnStats[i].GHideal,table);
                     updateData(connectionString, "GHRT", i,column.LasicAsicColumnStats[i].GHRT,table);
@@ -213,7 +207,7 @@ namespace AntStats.Avalonia.Database
                     
                 }
 
-                if (ProgressBarCreatingData.SettingMySqlData != -2)
+                if (ProgressBarCreatingData.DataBaseError != true)
                 {
                     updateData(connectionString, "TempPCB", i,column.LasicAsicColumnStats[i].TempPCB,table);
                     updateData(connectionString, "TempChip", i,column.LasicAsicColumnStats[i].TempChip,table);
@@ -228,7 +222,7 @@ namespace AntStats.Avalonia.Database
             
         
 
-            if (ProgressBarCreatingData.SettingMySqlData != -2)
+            if (ProgressBarCreatingData.DataBaseError != true)
             { 
                 updateData(connectionString, "Status", 9,column.ElapsedTime,table);
                 updateData(connectionString, "GHRT", 9,column.HashrateAVG,table);
