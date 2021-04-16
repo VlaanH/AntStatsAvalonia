@@ -15,7 +15,7 @@ namespace AntStats.Avalonia
         }
 
 
-        public bool CreateMySqlTable()
+        public bool CreateDataBaseTable()
         {
           
         

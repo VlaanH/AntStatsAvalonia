@@ -10,7 +10,7 @@ namespace AntStats.Avalonia.Database
     public class MySQL : IDatabase
     {
 
-       private static void updateData(string connector,string ColumnName,int ColumnId,string Data,string nameTable)
+       private static void UpdateData(string connector,string ColumnName,int ColumnId,string Data,string nameTable)
         {
             
             new Thread(() =>
@@ -123,10 +123,10 @@ namespace AntStats.Avalonia.Database
             
                ProgressBarCreatingData.CreatingTable++;
 
-               return true;
+               return false;
            }
 
-           return false;
+           return true;
        }
 
 
@@ -193,25 +193,25 @@ namespace AntStats.Avalonia.Database
                 if (ProgressBarCreatingData.DataBaseError != true)
                 { 
                     
-                    updateData(connectionString, "Chain", i, column.LasicAsicColumnStats[i].Chain, table);
-                    updateData(connectionString, "Frequency", i, column.LasicAsicColumnStats[i].Frequency, table);
-                    updateData(connectionString, "Watts", i, column.LasicAsicColumnStats[i].Watts, table);
+                    UpdateData(connectionString, "Chain", i, column.LasicAsicColumnStats[i].Chain, table);
+                    UpdateData(connectionString, "Frequency", i, column.LasicAsicColumnStats[i].Frequency, table);
+                    UpdateData(connectionString, "Watts", i, column.LasicAsicColumnStats[i].Watts, table);
                     await Task.Delay(500);
                 }
                 if (ProgressBarCreatingData.DataBaseError != true)
                 { 
-                    updateData(connectionString, "GHideal", i,column.LasicAsicColumnStats[i].GHideal,table);
-                    updateData(connectionString, "GHRT", i,column.LasicAsicColumnStats[i].GHRT,table);
-                    updateData(connectionString, "HW", i,column.LasicAsicColumnStats[i].HW,table);
+                    UpdateData(connectionString, "GHideal", i,column.LasicAsicColumnStats[i].GHideal,table);
+                    UpdateData(connectionString, "GHRT", i,column.LasicAsicColumnStats[i].GHRT,table);
+                    UpdateData(connectionString, "HW", i,column.LasicAsicColumnStats[i].HW,table);
                     await Task.Delay(500);
                     
                 }
 
                 if (ProgressBarCreatingData.DataBaseError != true)
                 {
-                    updateData(connectionString, "TempPCB", i,column.LasicAsicColumnStats[i].TempPCB,table);
-                    updateData(connectionString, "TempChip", i,column.LasicAsicColumnStats[i].TempChip,table);
-                    updateData(connectionString, "Status", i,column.LasicAsicColumnStats[i].Status,table);
+                    UpdateData(connectionString, "TempPCB", i,column.LasicAsicColumnStats[i].TempPCB,table);
+                    UpdateData(connectionString, "TempChip", i,column.LasicAsicColumnStats[i].TempChip,table);
+                    UpdateData(connectionString, "Status", i,column.LasicAsicColumnStats[i].Status,table);
                     await Task.Delay(500);
                 }
 
@@ -224,9 +224,9 @@ namespace AntStats.Avalonia.Database
 
             if (ProgressBarCreatingData.DataBaseError != true)
             { 
-                updateData(connectionString, "Status", 9,column.ElapsedTime,table);
-                updateData(connectionString, "GHRT", 9,column.HashrateAVG,table);
-                updateData(connectionString, "Chain", 9,column.DateTime,table);
+                UpdateData(connectionString, "Status", 9,column.ElapsedTime,table);
+                UpdateData(connectionString, "GHRT", 9,column.HashrateAVG,table);
+                UpdateData(connectionString, "Chain", 9,column.DateTime,table);
                 
             }
            

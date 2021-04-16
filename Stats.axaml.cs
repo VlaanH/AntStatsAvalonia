@@ -177,69 +177,51 @@ namespace AntStats.Avalonia
                    
                    
                AsicStats asicStats = new AsicStats(settings);
+
+               if (settings.DataBase==true)
+               {
+                   try
+                   {
+                       await Task.Run(() => 
+                           { statsObject = asicStats.GetDataBase(); });
+                   }
+                   catch (Exception exception)
+                   {
+                       ShowError("DataBase Error");
+                       _errors = true;
+                   }
                    
-              
-
-
-
-
-
-             
-          
-                   if (settings.DataBase==true)
+               }
+               else
+               {
+                   try
                    {
-
-                       try
-                       {
-                           await Task.Run(() => 
-                               { statsObject = asicStats.GetDataBase(); });
-                       }
-                       catch (Exception exception)
-                       {
-                           ShowError("DataBase Error");
-                           _errors = true;
-                       }
-                      
-               
+                       await Task.Run(() =>
+                           { statsObject = asicStats.GetLocalhost(); });
                    }
-                   else
+                   catch (Exception exception)
                    {
-                       try
-                       {
-                           await Task.Run(() =>
-                               { statsObject = asicStats.GetLocalhost(); });
-                       }
-                       catch (Exception exception)
-                       {
-                           ShowError("Localhost Error");
-                           _errors = true;
-                       }
+                       ShowError("Localhost Error");
+                       _errors = true;
+                   }
                       
                       
                        
-                       if (settings.Server == true & _errors == false)
-                       {
-                            
-                               await Task.Run(() => 
-                                   { asicStats.SetDataBase(statsObject); });
+                   if (settings.Server == true & _errors == false)
+                   {
+                       await Task.Run(() => 
+                           { asicStats.SetDataBase(statsObject); });
                         
-                       }
-                       
                    }
+                       
+               }
 
                  
 
-                   
 
-
-
-                  
-             
-
-                   if(_errors==false)
-                       SetAsicColumnTable(statsObject);
-
-             
+               if(_errors==false)
+                   SetAsicColumnTable(statsObject);
+               
         }
 
       

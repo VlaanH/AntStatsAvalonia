@@ -193,7 +193,16 @@ namespace AntStats.Avalonia
             
             
         }
+        private void ShowError(string errorText)
+        {
+            
+            this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
 
+            this.FindControl<Label>("CreatingTableLabel").IsVisible = true;
+            this.FindControl<Label>("CreatingTableLabel").Content = errorText;
+            this.FindControl<Button>("ButtonTable").IsEnabled = true;
+            
+        }
 
 
 
@@ -208,15 +217,24 @@ namespace AntStats.Avalonia
             EnabledProgressBar(17);
 
         
-            bool createTableRes=false;
-            await Task.Run(() =>
+            bool tableExists = false;
+            
+            try
             {
-                createTableRes = asicStats.CreateMySqlTable();
-            });
+                await Task.Run(() =>
+                    { tableExists = asicStats.CreateDataBaseTable();});
+            }
+            catch (Exception exception)
+            {
+                ProgressBarCreatingData.CreatingTable = 0;
+                ShowError("DataBase Error");
+            }
+           
+            
             
             
             //if the table already exists
-            if (createTableRes==false)
+            if (tableExists==true)
             {
                 this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
                 this.FindControl<Label>("CreatingTableLabel").Content = "The table already exists";

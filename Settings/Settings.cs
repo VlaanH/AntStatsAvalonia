@@ -38,9 +38,8 @@ namespace AntStats.Avalonia
 
         public static async Task<SettingsClass> Get()
         {
-
-
-                SettingsClass settings=new SettingsClass();
+            SettingsClass settings = new SettingsClass();
+                
                 try
                 {
                    
@@ -55,10 +54,7 @@ namespace AntStats.Avalonia
                 }
               
                 return settings;
-                
-      
-
-     
+          
         }
 
 
