@@ -16,11 +16,11 @@ namespace AntStats.Avalonia
         
         
         
-        public string MysqlPass { get; set; }
+        public string DatabasePass { get; set; }
            
-        public string MysqlUser { get; set; }
+        public string DatabaseUser { get; set; }
             
-        public string MysqlIP { get; set; }
+        public string DatabaseIP { get; set; }
         
         public string NameTable { get; set; }
         public string DataBaseName { get; set; }

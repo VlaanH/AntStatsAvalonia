@@ -168,8 +168,8 @@
                 HorizontalAlignment="Stretch"
                 Grid.Column="2"
                 Click="ToggleSwitchMySql_OnClick"
-                OnContent="On from MySql"
-                OffContent="Off from MySql"
+                OnContent="On Get DB"
+                OffContent="Off Get DB"
               /> 
 
       

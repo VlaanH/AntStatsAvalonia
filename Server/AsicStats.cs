@@ -19,7 +19,7 @@ namespace AntStats.Avalonia
         {
           
         
-            string connector=$"Server={Settings.MysqlIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.MysqlUser};pwd={Settings.MysqlPass};charset=utf8";
+            string connector=$"Server={Settings.DatabaseIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.DatabaseUser};pwd={Settings.DatabasePass};charset=utf8";
 
             
            
@@ -50,7 +50,7 @@ namespace AntStats.Avalonia
           
             MySQL mySql = new MySQL();
 
-            string connector=$"Server={Settings.MysqlIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.MysqlUser};pwd={Settings.MysqlPass};charset=utf8";
+            string connector=$"Server={Settings.DatabaseIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.DatabaseUser};pwd={Settings.DatabasePass};charset=utf8";
             
                 
             return mySql.GetAsicColumnData(connector,Settings.NameTable);
@@ -64,7 +64,7 @@ namespace AntStats.Avalonia
           
             MySQL mySql = new MySQL();
 
-            string connector=$"Server={Settings.MysqlIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.MysqlUser};pwd={Settings.MysqlPass};charset=utf8";
+            string connector=$"Server={Settings.DatabaseIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.DatabaseUser};pwd={Settings.DatabasePass};charset=utf8";
             
             
           

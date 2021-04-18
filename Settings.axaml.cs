@@ -73,15 +73,15 @@ namespace AntStats.Avalonia
             if(settings.NameTable!=null)
                 GetTextBox("TnameTable").Text = settings.NameTable;
 
-            if(settings.MysqlPass!=null)
-                GetTextBox("MysqlTpassword").Text = settings.MysqlPass;
+            if(settings.DatabasePass!=null)
+                GetTextBox("MysqlTpassword").Text = settings.DatabasePass;
             
           
-            if(settings.MysqlUser!=null)
-                GetTextBox("MysqlTuser").Text=settings.MysqlUser;
+            if(settings.DatabaseUser!=null)
+                GetTextBox("MysqlTuser").Text=settings.DatabaseUser;
               
-            if(settings.MysqlIP!=null)
-                GetTextBox("MysqlTip").Text = settings.MysqlIP  ;
+            if(settings.DatabaseIP!=null)
+                GetTextBox("MysqlTip").Text = settings.DatabaseIP  ;
             
         
             
@@ -138,11 +138,11 @@ namespace AntStats.Avalonia
             
             settings.Server = GetCToggleSwitch("ToggleSwitchServer").IsChecked.Value;
             
-            settings.MysqlPass = GetTextBox("MysqlTpassword").Text;
+            settings.DatabasePass = GetTextBox("MysqlTpassword").Text;
             
-            settings.MysqlUser = GetTextBox("MysqlTuser").Text;
+            settings.DatabaseUser = GetTextBox("MysqlTuser").Text;
                     
-            settings.MysqlIP = GetTextBox("MysqlTip").Text;
+            settings.DatabaseIP = GetTextBox("MysqlTip").Text;
             
             
             return settings;
