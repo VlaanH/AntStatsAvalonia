@@ -4,9 +4,10 @@ namespace AntStats.Avalonia.Database
 {
     public interface IDatabase
     {
-        public bool  CreateTable(string connector, string nameTable,string database);
+        public bool  CreateTable(string connector, string nameTable,string database,ref int progress);
         AsicStandartStatsObject GetAsicColumnData(string connectionString,string table);
         
-        void SetAsicColumnData(string connectionString,AsicStandartStatsObject column,string table);
+        void SetAsicColumnData(string connectionString, AsicStandartStatsObject column, string tableref,
+            ref int progress);
     }
 }

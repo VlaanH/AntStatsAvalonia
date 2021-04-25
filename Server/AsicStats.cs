@@ -25,7 +25,7 @@ namespace AntStats.Avalonia
            
             Database.MySQL mySql = new MySQL();
                 
-            return mySql.CreateTable(connector,Settings.NameTable,Settings.DataBaseName);
+            return mySql.CreateTable(connector,Settings.NameTable,Settings.DataBaseName,ref ProgressBarCreatingData.CreatingTable);
 
 
       
@@ -68,7 +68,7 @@ namespace AntStats.Avalonia
             
             
           
-            mySql.SetAsicColumnData(connector,statsObject,Settings.NameTable);
+            mySql.SetAsicColumnData(connector,statsObject,Settings.NameTable,ref ProgressBarCreatingData.CreatingTable);
           
       
             

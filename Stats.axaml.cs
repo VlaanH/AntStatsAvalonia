@@ -108,15 +108,17 @@ namespace AntStats.Avalonia
             this.FindControl<ProgressBar>("DatabaseProgressBar").IsVisible = true;
             this.FindControl<Label>("DatabaseProgressBarText").IsVisible = true;
             this.FindControl<Label>("DatabaseProgressBarText").Content = "Database update";
-           
-           
-            while (ProgressBarCreatingData.DataBase<maxValue & ProgressBarCreatingData.DataBaseError==false)
-            { 
+
+
+            while (ProgressBarCreatingData.DataBase < maxValue & ProgressBarCreatingData.DataBaseError == false)
+            {
+              
+                this.FindControl<ProgressBar>("DatabaseProgressBar").Value =
+                    (int) (((double) ProgressBarCreatingData.DataBase / maxValue) * 100);
                 await Task.Delay(700);
-                this.FindControl<ProgressBar>("DatabaseProgressBar").Value=(int)(((double)ProgressBarCreatingData.DataBase/maxValue)*100);
-       
-            }
-     
+            } 
+            
+            
             this.FindControl<Button>("ButtonStats").IsEnabled = true;
             
             
@@ -154,7 +156,7 @@ namespace AntStats.Avalonia
         {  
             _errors = false;
             ShowError(default);
-            ProgressBarCreatingData.DataBase = 0;ProgressBarCreatingData.DataBaseError = false;
+            ProgressBarCreatingData.DataBase = 0;ProgressBarCreatingData.DataBaseError = false;this.FindControl<ProgressBar>("DatabaseProgressBar").Value = 0;
             AsicStandartStatsObject statsObject = new AsicStandartStatsObject();
             SettingsClass settings = new SettingsClass();
            

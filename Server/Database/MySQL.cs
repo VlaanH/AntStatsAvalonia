@@ -10,7 +10,7 @@ namespace AntStats.Avalonia.Database
     public class MySQL : IDatabase
     {
 
-       private static void UpdateData(string connector,string ColumnName,int ColumnId,string Data,string nameTable)
+       private static void UpdateData(string connector,string ColumnName,int ColumnId,string Data,string nameTable,ref int progress)
         {
             
             new Thread(() =>
@@ -79,12 +79,12 @@ namespace AntStats.Avalonia.Database
 
 
 
-       public bool CreateTable(string connector,string nameTable,string database)
+       public bool CreateTable(string connector,string nameTable,string database,ref int progress)
        {
           
          
            if (tablePresenceInDatabase(nameTable, connector, database) == false)
-           { ProgressBarCreatingData.CreatingTable++;
+           { progress++;
                string table =
                    $"CREATE TABLE `{database}`.`{nameTable}` (" +
                    "`Chain` VARCHAR(45) NULL," +
@@ -100,20 +100,20 @@ namespace AntStats.Avalonia.Database
                
                
                MySqlConnection mySqlConnection = new MySqlConnection(connector);
-               ProgressBarCreatingData.CreatingTable++;
+               progress++;
                
                
                mySqlConnection.Open();
-               ProgressBarCreatingData.CreatingTable++;
+               progress++;
                MySqlCommand command = new MySqlCommand(table,mySqlConnection);
                command.ExecuteNonQuery();
-               ProgressBarCreatingData.CreatingTable++;
+               progress++;
                mySqlConnection.Close();
-               ProgressBarCreatingData.CreatingTable++;
+               progress++;
 
                for (int i = 0; i <= 10; i++)
                {
-                   ProgressBarCreatingData.CreatingTable++;
+                   progress++;
                    string addColumn = $"INSERT INTO `{database}`.`{nameTable}` (`id`) VALUES ('{i}')";
                    mySqlConnection.Open();
                    new MySqlCommand(addColumn,mySqlConnection).ExecuteNonQuery();
@@ -121,7 +121,7 @@ namespace AntStats.Avalonia.Database
                    
                }
             
-               ProgressBarCreatingData.CreatingTable++;
+               progress++;
 
                return false;
            }
@@ -185,7 +185,7 @@ namespace AntStats.Avalonia.Database
   
         
         
-        public async void SetAsicColumnData(string connectionString, AsicStandartStatsObject column,string table)
+        public void SetAsicColumnData(string connectionString, AsicStandartStatsObject column,string table,ref int progress)
         {
             for (int i = 0; i <= 8; i++)
             {
@@ -193,26 +193,26 @@ namespace AntStats.Avalonia.Database
                 if (ProgressBarCreatingData.DataBaseError != true)
                 { 
                     
-                    UpdateData(connectionString, "Chain", i, column.LasicAsicColumnStats[i].Chain, table);
-                    UpdateData(connectionString, "Frequency", i, column.LasicAsicColumnStats[i].Frequency, table);
-                    UpdateData(connectionString, "Watts", i, column.LasicAsicColumnStats[i].Watts, table);
-                    await Task.Delay(500);
+                    UpdateData(connectionString, "Chain", i, column.LasicAsicColumnStats[i].Chain, table,ref progress);
+                    UpdateData(connectionString, "Frequency", i, column.LasicAsicColumnStats[i].Frequency, table,ref progress);
+                    UpdateData(connectionString, "Watts", i, column.LasicAsicColumnStats[i].Watts, table,ref progress);
+                    Thread.Sleep(400);
                 }
                 if (ProgressBarCreatingData.DataBaseError != true)
                 { 
-                    UpdateData(connectionString, "GHideal", i,column.LasicAsicColumnStats[i].GHideal,table);
-                    UpdateData(connectionString, "GHRT", i,column.LasicAsicColumnStats[i].GHRT,table);
-                    UpdateData(connectionString, "HW", i,column.LasicAsicColumnStats[i].HW,table);
-                    await Task.Delay(500);
+                    UpdateData(connectionString, "GHideal", i,column.LasicAsicColumnStats[i].GHideal,table,ref progress);
+                    UpdateData(connectionString, "GHRT", i,column.LasicAsicColumnStats[i].GHRT,table,ref progress);
+                    UpdateData(connectionString, "HW", i,column.LasicAsicColumnStats[i].HW,table,ref progress);
+                    Thread.Sleep(400);
                     
                 }
 
                 if (ProgressBarCreatingData.DataBaseError != true)
                 {
-                    UpdateData(connectionString, "TempPCB", i,column.LasicAsicColumnStats[i].TempPCB,table);
-                    UpdateData(connectionString, "TempChip", i,column.LasicAsicColumnStats[i].TempChip,table);
-                    UpdateData(connectionString, "Status", i,column.LasicAsicColumnStats[i].Status,table);
-                    await Task.Delay(500);
+                    UpdateData(connectionString, "TempPCB", i,column.LasicAsicColumnStats[i].TempPCB,table,ref progress);
+                    UpdateData(connectionString, "TempChip", i,column.LasicAsicColumnStats[i].TempChip,table,ref progress);
+                    UpdateData(connectionString, "Status", i,column.LasicAsicColumnStats[i].Status,table,ref progress);
+                    Thread.Sleep(400);
                 }
 
                 
@@ -224,9 +224,9 @@ namespace AntStats.Avalonia.Database
 
             if (ProgressBarCreatingData.DataBaseError != true)
             { 
-                UpdateData(connectionString, "Status", 9,column.ElapsedTime,table);
-                UpdateData(connectionString, "GHRT", 9,column.HashrateAVG,table);
-                UpdateData(connectionString, "Chain", 9,column.DateTime,table);
+                UpdateData(connectionString, "Status", 9,column.ElapsedTime,table,ref progress);
+                UpdateData(connectionString, "GHRT", 9,column.HashrateAVG,table,ref progress);
+                UpdateData(connectionString, "Chain", 9,column.DateTime,table,ref progress);
                 
             }
            

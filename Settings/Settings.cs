@@ -42,7 +42,6 @@ namespace AntStats.Avalonia
                 
                 try
                 {
-                   
                     using (FileStream fs = new FileStream("settings.json", FileMode.OpenOrCreate))
                     {
                         settings = await JsonSerializer.DeserializeAsync<SettingsClass>(fs);
@@ -50,9 +49,9 @@ namespace AntStats.Avalonia
                 }
                 catch (Exception e)
                 {
-                    
+                    // ignored
                 }
-              
+
                 return settings;
           
         }
@@ -61,9 +60,12 @@ namespace AntStats.Avalonia
 
         public static async void Save(SettingsClass settingsClass)
         {
-            File.WriteAllText("settings.json",default);
+           
             using (FileStream fs = new FileStream("settings.json", FileMode.OpenOrCreate))
             { 
+                //cleaning
+                fs.SetLength(default);
+                
                 await JsonSerializer.SerializeAsync<SettingsClass>(fs, settingsClass);
             }
         }
