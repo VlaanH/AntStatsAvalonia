@@ -153,7 +153,49 @@ namespace AntStats.Avalonia
 
         private bool _errors = false;
         async void Button_OnClick(object? sender, RoutedEventArgs e)
-        {  
+        {
+            SettingsClass settings = new SettingsClass();
+            await Task.Run(() =>
+                {  settings = Settings.Get().Result; });
+
+            if (settings.AutoUpdate == true | this.FindControl<Button>("Settings").IsEnabled==false)
+            {
+                if (this.FindControl<Button>("Settings").IsEnabled==true)
+                {
+                    this.FindControl<Button>("Settings").IsEnabled = false;
+                    this.FindControl<Button>("ButtonStats").Content = "Stop";
+
+
+                }
+                else
+                {
+                    this.FindControl<Button>("Settings").IsEnabled = true;
+                    this.FindControl<Button>("ButtonStats").Content = "Get or Start auto update";
+                }
+
+                while (this.FindControl<Button>("Settings").IsEnabled==false)
+                {
+                  
+                    GetStats();
+                    for (int i = 0; i < int.Parse(settings.AutoUpdateValue)*60 & this.FindControl<Button>("Settings").IsEnabled==false; i++)
+                    {
+                        
+                        this.FindControl<Label>("AutoUpdateProgress").Content = (int.Parse(settings.AutoUpdateValue)*60)-i+"s";
+                        
+                        await Task.Delay(1000);
+                    }
+                   
+                }
+
+                this.FindControl<Label>("AutoUpdateProgress").Content = default;
+            }
+            else
+                GetStats();
+        }
+
+
+        async void GetStats()
+        {
             _errors = false;
             ShowError(default);
             ProgressBarCreatingData.DataBase = 0;ProgressBarCreatingData.DataBaseError = false;this.FindControl<ProgressBar>("DatabaseProgressBar").Value = 0;
@@ -173,10 +215,7 @@ namespace AntStats.Avalonia
                     EnabledProgressBar(83);
 
                
-
                
-           
-                   
                    
                AsicStats asicStats = new AsicStats(settings);
 
@@ -223,10 +262,11 @@ namespace AntStats.Avalonia
 
                if(_errors==false)
                    SetAsicColumnTable(statsObject);
-               
+            
         }
 
-      
+
+
         private void Settings_OnClick(object? sender, RoutedEventArgs e)
         {
             SettingsW.Show(this);

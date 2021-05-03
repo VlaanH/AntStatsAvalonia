@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 
 namespace AntStats.Avalonia
 {
@@ -26,8 +27,13 @@ namespace AntStats.Avalonia
         public string DataBaseName { get; set; }
         public string Port { get; set; }
 
-        
-        
+
+
+        public string AutoUpdateValue { get; set; }
+
+
+
+        public bool AutoUpdate { get; set; }
         public bool DataBase { get; set; }
         public bool Server { get;set; }
     }
@@ -52,7 +58,7 @@ namespace AntStats.Avalonia
                     // ignored
                 }
 
-                return settings;
+            return settings;
           
         }
 

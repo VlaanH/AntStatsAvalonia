@@ -2,10 +2,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="385" 
+        mc:Ignorable="d" d:DesignWidth="550" d:DesignHeight="400" 
         x:Class="AntStats.Avalonia.SettingsW"
         WindowStartupLocation="CenterScreen"
-        Title="" Background="#1e2124" MinWidth="650" MinHeight="350" MaxHeight="380" MaxWidth="800">
+        Title="" Background="#1e2124" MinWidth="870" MinHeight="400" MaxHeight="410" MaxWidth="900">
 
 
     
@@ -133,7 +133,12 @@
             
             
             </Grid > 
-            
+            <DockPanel x:Name="DockPanelSliderAutoUpdate" VerticalAlignment="Center" Margin="10" IsVisible="False">
+                
+                <TextBlock VerticalAlignment="Center" FontWeight="Bold" Text="{Binding ElementName=slColorB, Path=Value}" Margin="0,5,2,0"></TextBlock>
+                <TextBlock VerticalAlignment="Center" FontWeight="Bold" Margin="0,5,10,0" Text="M"></TextBlock>
+                <Slider x:Name="AutoUpdateSlider" Maximum="60" Minimum="1" TickPlacement="BottomRight" TickFrequency="1" IsSnapToTickEnabled="True" Name="slColorB"  />
+            </DockPanel>
         </StackPanel>
 
              
@@ -142,6 +147,7 @@
         <Grid VerticalAlignment="Bottom" Margin="0,50,0,0">
     
             <Grid.ColumnDefinitions >
+                <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -159,7 +165,17 @@
             ></Button>
 
             
-            
+            <ToggleSwitch  
+                x:Name="AutoUpdate"
+                VerticalAlignment="Stretch"
+                VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                HorizontalAlignment="Stretch"
+                Grid.Column="1"
+                Click="AutoUpdate_OnClick"
+                OnContent="On Auto Update"
+                OffContent="Off Auto Update"
+                Margin="0,0,10,0"
+                /> 
             
             <ToggleSwitch  
                 x:Name="ToggleSwitchMySql"
@@ -179,13 +195,13 @@
                 VerticalAlignment="Stretch"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 HorizontalAlignment="Stretch"
-                Grid.Column="1"
+                Grid.Column="3"
                 Click="ToggleSwitchServer_OnClick"
         
                 
                 Margin="0,0,10,0"
-                OnContent="on Server"
-                OffContent="off Server"/> 
+                OnContent="On Server"
+                OffContent="Off Server"/> 
             
           
            
@@ -194,8 +210,8 @@
                 x:Name="Button" VerticalAlignment="Stretch"
                 VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 HorizontalAlignment="Stretch"
-                Grid.Column="3" Content="Save"
-                Margin="0,0,10,0"
+                Grid.Column="4" Content="Save"
+                Margin="0,0,0,0"
             ></Button>
             
            

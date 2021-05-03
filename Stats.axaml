@@ -157,12 +157,11 @@
                
                
                 <Button           
-                       
                        Click="Button_OnClick"
                         x:Name="ButtonStats" VerticalAlignment="Stretch"
                         VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                         HorizontalAlignment="Stretch"
-                        Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="5" Content="GET"
+                        Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="5" Content="Get or Start auto update"
                        Margin="1"
                 ></Button>
                 
@@ -179,6 +178,13 @@
                 
              
             
+               <Label x:Name="AutoUpdateProgress" Grid.Row="11" Grid.Column="7" 
+                      VerticalAlignment="Stretch"
+                      FontSize="15"
+                      
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+               ></Label>
+               
                
              
                <Grid Grid.Row="11" Grid.ColumnSpan="2" >  
@@ -188,5 +194,8 @@
                       </Label>
                </Grid>
 
+        
+        
+        
         </Grid>
 </Window>

@@ -82,11 +82,22 @@ namespace AntStats.Avalonia
               
             if(settings.DatabaseIP!=null)
                 GetTextBox("MysqlTip").Text = settings.DatabaseIP  ;
-            
-        
-            
-            
-            
+
+
+            if (settings.AutoUpdate != null & settings.AutoUpdateValue!=null)
+            {
+                GetCToggleSwitch("AutoUpdate").IsChecked = settings.AutoUpdate;
+                if (GetCToggleSwitch("AutoUpdate").IsChecked.Value==true)
+                {
+                    this.FindControl<DockPanel>("DockPanelSliderAutoUpdate").IsVisible = true;
+                    this.FindControl<Slider>("AutoUpdateSlider").Value = double.Parse(settings.AutoUpdateValue);
+
+                }
+               
+            }
+
+
+
             if (settings.DataBase != null)
             {
                 GetCToggleSwitch("ToggleSwitchMySql").IsChecked = settings.DataBase;
@@ -119,14 +130,14 @@ namespace AntStats.Avalonia
         SettingsClass GetSetting()
         {
             SettingsClass settings = new SettingsClass();
-            settings.IP = GetTextBox("Tip").Text;
             
+            settings.IP = GetTextBox("Tip").Text;
+
+            settings.AutoUpdate = GetCToggleSwitch("AutoUpdate").IsChecked.Value;
             
             settings.User = GetTextBox("Tuser").Text;
             
-            
             settings.Pass = GetTextBox("Tpassword").Text;
-            
             
             settings.Port = GetTextBox("Tport").Text;
             
@@ -143,6 +154,8 @@ namespace AntStats.Avalonia
             settings.DatabaseUser = GetTextBox("MysqlTuser").Text;
                     
             settings.DatabaseIP = GetTextBox("MysqlTip").Text;
+
+            settings.AutoUpdateValue = this.FindControl<Slider>("AutoUpdateSlider").Value.ToString();
             
             
             return settings;
@@ -255,13 +268,25 @@ namespace AntStats.Avalonia
         }
 
         private void ToggleSwitchMySql_OnClick(object? sender, RoutedEventArgs e)
-        {   GetCToggleSwitch("ToggleSwitchServer").IsChecked = false;
-            
+        {   
+            GetCToggleSwitch("ToggleSwitchServer").IsChecked = false;
         }
 
         private void ToggleSwitchServer_OnClick(object? sender, RoutedEventArgs e)
         {
             GetCToggleSwitch("ToggleSwitchMySql").IsChecked = false;
+        }
+
+        private void AutoUpdate_OnClick(object? sender, RoutedEventArgs e)
+        {
+            if (GetCToggleSwitch("AutoUpdate").IsChecked.Value == true)
+                this.FindControl<DockPanel>("DockPanelSliderAutoUpdate").IsVisible = true;
+         
+            else
+                this.FindControl<DockPanel>("DockPanelSliderAutoUpdate").IsVisible = false;
+
+            
+            
         }
     }
 }
