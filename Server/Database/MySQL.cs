@@ -131,7 +131,7 @@ namespace AntStats.Avalonia.Database
 
 
 
-       public AsicStandartStatsObject GetAsicColumnData(string connector,string nameTable)
+       public AsicStandartStatsObject GetAsicColumnData(string connector,string nameTable,string database)
        {
          
             AsicStandartStatsObject asicsObject=new AsicStandartStatsObject();
@@ -139,7 +139,7 @@ namespace AntStats.Avalonia.Database
             MySqlConnection mySqlConnection = new MySqlConnection(connector);
             
             mySqlConnection.Open();
-            MySqlCommand command = new MySqlCommand("SELECT * FROM asic."+nameTable,mySqlConnection);
+            MySqlCommand command = new MySqlCommand("SELECT * FROM "+database+"."+nameTable,mySqlConnection);
 
             MySqlDataReader reader = command.ExecuteReader();
 

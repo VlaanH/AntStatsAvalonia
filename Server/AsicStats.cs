@@ -53,7 +53,7 @@ namespace AntStats.Avalonia
             string connector=$"Server={Settings.DatabaseIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.DatabaseUser};pwd={Settings.DatabasePass};charset=utf8";
             
                 
-            return mySql.GetAsicColumnData(connector,Settings.NameTable);
+            return mySql.GetAsicColumnData(connector,Settings.NameTable,Settings.DataBaseName);
             
         }
 
