@@ -1,16 +1,18 @@
 using System;
+using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
-using AntStats.Avalonia.Database;
+using AntStatsCore.Database;
+using AntStatsCore;
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Data;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 
 
 namespace AntStats.Avalonia
 {
-    public class SettingsW : Window
+    public class SettingsW : Window,INotifyPropertyChanged
     {
         public SettingsW()
         {
@@ -54,7 +56,7 @@ namespace AntStats.Avalonia
             msgbox.ShowDialog(parent);
         }
 
-        void SetSetting(SettingsClass settings)
+        void SetSetting(SettingsData settings)
         {
             if(settings.IP!=null)
                 GetTextBox("Tip").Text = settings.IP;
@@ -127,9 +129,9 @@ namespace AntStats.Avalonia
             
         }
 
-        SettingsClass GetSetting()
+        SettingsData  GetSetting()
         {
-            SettingsClass settings = new SettingsClass();
+            SettingsData  settings = new SettingsData();
             
             settings.IP = GetTextBox("Tip").Text;
 
@@ -172,40 +174,7 @@ namespace AntStats.Avalonia
         }
 
        
-        private async void EnabledProgressBar(int maxValue)
-        {
-            
-            this.FindControl<Button>("ButtonTable").IsEnabled = false;
-            
-            
-            this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = true;
-            this.FindControl<Label>("CreatingTableLabel").Content = "Creating Table";
-            this.FindControl<Label>("CreatingTableLabel").IsVisible = true;
 
-          
-            
-            while (ProgressBarCreatingData.CreatingTable<maxValue & ProgressBarCreatingData.CreatingTable>-1)
-            {
-                await Task.Delay(700);
-                this.FindControl<ProgressBar>("CreatingTableProgressBar").Value=(int)(((double)ProgressBarCreatingData.CreatingTable/maxValue)*100);
-              
-            }
-
-            this.FindControl<Button>("ButtonTable").IsEnabled = true;
-
-
-            if (ProgressBarCreatingData.CreatingTable==maxValue)
-            {
-                this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
-                this.FindControl<Label>("CreatingTableLabel").IsVisible = false; 
-            }
-            
-          
-            ProgressBarCreatingData.CreatingTable = 0;
-
-            
-            
-        }
         private void ShowError(string errorText)
         {
             
@@ -217,50 +186,78 @@ namespace AntStats.Avalonia
             
         }
 
+        private int _progress=0;
 
+        public  int ProgressBar
+        {
+            get { return this._progress; }
+            set 
+            {
+                this._progress = value;
+                NotifyPropertyChange("ProgressBar");
+            }
+        }
 
+        void EnableProgressBar()
+        {
+            
+            this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = true;
+            this.FindControl<Label>("CreatingTableLabel").IsVisible = true;
+        }
+
+        void DisableProgressBar()
+        {
+            
+            this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
+
+        }
+        
         private async void ButtonTable_OnClick(object? sender, RoutedEventArgs e)
         {
-
+            
+            DataContext = this;
+            DisableProgressBar();
+            EnableProgressBar();
+            
             var settingsClass = GetSetting();
             
             AsicStats asicStats = new AsicStats(settingsClass);
 
-
-            EnabledProgressBar(17);
-
-        
-            bool tableExists = false;
             
             try
             {
+                Result res = Result.NoError;
+                int progress = 0;
+                bool update = true;
+                new Thread(() =>
+                { 
+                    do
+                    {   Thread.Sleep(100);
+                        ProgressBar = progress;
+                        
+                    } while (update == true);
+                }).Start();    
+                
                 await Task.Run(() =>
-                    { tableExists = asicStats.CreateDataBaseTable();});
+                {
+                    res = asicStats.CreateDataBaseTable(ref progress);
+             
+                });
+                
+                update = false;
+
+                
+                
+                if (res==Result.ErrorExist)
+                {
+                    ShowError("Table Exist");
+                }
+                
             }
             catch (Exception exception)
             {
-                ProgressBarCreatingData.CreatingTable = 0;
                 ShowError("DataBase Error");
             }
-           
-            
-            
-            
-            //if the table already exists
-            if (tableExists==true)
-            {
-                this.FindControl<ProgressBar>("CreatingTableProgressBar").IsVisible = false;
-                this.FindControl<Label>("CreatingTableLabel").Content = "The table already exists";
-
-                ProgressBarCreatingData.CreatingTable = -2;
-       
-                
-                this.FindControl<Button>("ButtonTable").IsEnabled = true;
-            }
-            
-            
-       
-
 
            
             
@@ -288,5 +285,20 @@ namespace AntStats.Avalonia
             
             
         }
+        
+        
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void NotifyPropertyChange(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+        
     }
 }

@@ -1,51 +1,51 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using AntStats.Avalonia.Database;
+﻿using System;
+using AntStatsCore.Database;
+using AntStatsCore.Parsing;
 
-namespace AntStats.Avalonia
+namespace AntStatsCore
 {
     public class AsicStats
     {
-        private SettingsClass Settings { get; set; }
-
-        public AsicStats(SettingsClass settings)
+        private SettingsData Settings { get; set; }
+        ParsingObject ParsingObject{ get; set; }
+  
+        
+        public AsicStats(SettingsData settings,ParsingObject parsingObject = default)
         {
+            if (parsingObject==default)
+                ParsingObject = StandardData.StandardParsingObject;
+            else
+                ParsingObject = parsingObject;
+            
+            
+            
             Settings = settings;
         }
 
-
-        public bool CreateDataBaseTable()
-        {
-          
         
+        public Result CreateDataBaseTable(ref int percentageProgress)
+        {
             string connector=$"Server={Settings.DatabaseIP};port={Settings.Port};Database={Settings.DataBaseName};Uid={Settings.DatabaseUser};pwd={Settings.DatabasePass};charset=utf8";
-
             
-           
-            Database.MySQL mySql = new MySQL();
+            MySQL mySql = new MySQL();
                 
-            return mySql.CreateTable(connector,Settings.NameTable,Settings.DataBaseName,ref ProgressBarCreatingData.CreatingTable);
-
-
-      
+            return mySql.CreateTable(connector,Settings.NameTable,Settings.DataBaseName,ref percentageProgress);
             
         }
+
+
         
-        
-        
-        
-        
-        public AsicStandartStatsObject GetLocalhost()
+        public AsicStandardStatsObject GetLocalhost()
         {
             var html = ParsingAuthorizationWeb.DownloadString($"http://{Settings.IP}/cgi-bin/minerStatus.cgi", Settings.User,
                 Settings.Pass);
-            
+
                 
-             return Html_In_AsicStandartStatsObject._Convert(html);
+             return Html_In_AsicStandartStatsObject._Convert(html,ParsingObject);
             
         }
-        public AsicStandartStatsObject GetDataBase()
+        
+        public AsicStandardStatsObject GetDataBase()
         {
           
             MySQL mySql = new MySQL();
@@ -59,7 +59,7 @@ namespace AntStats.Avalonia
 
       
         
-        public void SetDataBase(AsicStandartStatsObject statsObject)
+        public Result SetDataBase(AsicStandardStatsObject statsObject,ref int percentageProgress)
         {
           
             MySQL mySql = new MySQL();
@@ -68,13 +68,8 @@ namespace AntStats.Avalonia
             
             
           
-            mySql.SetAsicColumnData(connector,statsObject,Settings.NameTable,ref ProgressBarCreatingData.CreatingTable);
+           return mySql.SetAsicColumnData(connector,statsObject,Settings.NameTable,ref percentageProgress);
           
-      
-            
         }
-        
-        
-        
     }
 }

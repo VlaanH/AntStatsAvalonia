@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace AntStats.Avalonia
+namespace AntStatsCore
 {
     public class AsicColumnClass
     {
@@ -27,7 +27,7 @@ namespace AntStats.Avalonia
     
     
     
-    public class AsicStandartStatsObject
+    public class AsicStandardStatsObject
     {
         public List<AsicColumnClass> LasicAsicColumnStats = new List<AsicColumnClass>();
 

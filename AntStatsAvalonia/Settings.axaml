@@ -126,6 +126,7 @@
                     Height="10" 
                     Minimum="0" 
                     Grid.Row="1"
+                    Value="{Binding ProgressBar}"
                     IsVisible="False"
                 />
            

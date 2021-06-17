@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace AntStats.Avalonia
+namespace AntStatsCore.Parsing
 {
   public static class ParsingAuthorizationWeb
     {
@@ -20,7 +20,7 @@ namespace AntStats.Avalonia
                     DigestAuthFixer digest = new DigestAuthFixer(url, user, password);
                     html = digest.GrabResponse(url);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     // ignored
                 }
@@ -33,7 +33,7 @@ namespace AntStats.Avalonia
     
     
       public class DigestAuthFixer
-        {
+      {
             private static string _host;
             private static string _user;
             private static string _password;
@@ -52,8 +52,7 @@ namespace AntStats.Avalonia
                 _password = password;
             }
 
-            private string CalculateMd5Hash(
-                string input)
+            private string CalculateMd5Hash(string input)
             {
                 var inputBytes = Encoding.ASCII.GetBytes(input);
                 var hash = MD5.Create().ComputeHash(inputBytes);
@@ -63,9 +62,7 @@ namespace AntStats.Avalonia
                 return sb.ToString();
             }
 
-            private string GrabHeaderVar(
-                string varName,
-                string header)
+            private string GrabHeaderVar(string varName, string header)
             {
                 var regHeader = new Regex(string.Format(@"{0}=""([^""]*)""", varName));
                 var matchHeader = regHeader.Match(header);
@@ -74,8 +71,7 @@ namespace AntStats.Avalonia
                 throw new ApplicationException(string.Format("Header {0} not found", varName));
             }
 
-            private string GetDigestHeader(
-                string dir)
+            private string GetDigestHeader(string dir)
             {
                 _nc = _nc + 1;
 
@@ -90,8 +86,7 @@ namespace AntStats.Avalonia
                     _user, _realm, _nonce, dir, digestResponse, _qop, _nc, _cnonce);
             }
 
-            public string GrabResponse(
-                string dir)
+            public string GrabResponse(string dir)
             {
                 var url =  dir;
                 var uri = new Uri(url);
@@ -135,5 +130,5 @@ namespace AntStats.Avalonia
                 return reader.ReadToEnd();
 
             }
-        }   
+      }   
 }

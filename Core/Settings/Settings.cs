@@ -2,11 +2,10 @@ using System;
 using System.IO;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
 
-namespace AntStats.Avalonia
+namespace AntStatsCore
 {
-    public class SettingsClass
+    public class SettingsData
     {
         public string Pass { get; set; }
            
@@ -42,18 +41,18 @@ namespace AntStats.Avalonia
     public static class Settings
     {
 
-        public static async Task<SettingsClass> Get()
+        public static async Task<SettingsData> Get()
         {
-            SettingsClass settings = new SettingsClass();
+            SettingsData settings = new SettingsData();
                 
                 try
                 {
                     using (FileStream fs = new FileStream("settings.json", FileMode.OpenOrCreate))
                     {
-                        settings = await JsonSerializer.DeserializeAsync<SettingsClass>(fs);
+                        settings = await JsonSerializer.DeserializeAsync<SettingsData>(fs);
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     // ignored
                 }
@@ -64,7 +63,7 @@ namespace AntStats.Avalonia
 
 
 
-        public static async void Save(SettingsClass settingsClass)
+        public static async void Save(SettingsData settingsClass)
         {
            
             using (FileStream fs = new FileStream("settings.json", FileMode.OpenOrCreate))
@@ -72,7 +71,7 @@ namespace AntStats.Avalonia
                 //cleaning
                 fs.SetLength(default);
                 
-                await JsonSerializer.SerializeAsync<SettingsClass>(fs, settingsClass);
+                await JsonSerializer.SerializeAsync<SettingsData>(fs, settingsClass);
             }
         }
     }

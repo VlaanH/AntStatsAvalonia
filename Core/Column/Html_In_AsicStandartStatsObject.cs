@@ -1,26 +1,27 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using AntStatsCore.Parsing;
 
-namespace AntStats.Avalonia
+namespace AntStatsCore
 {
     public class Html_In_AsicStandartStatsObject
     {
        
-        public static AsicStandartStatsObject _Convert (string html)
+        public static AsicStandardStatsObject _Convert (string html,ParsingObject parsingObject)
         {
-            AsicStandartStatsObject LasicColumn = new AsicStandartStatsObject();
+            AsicStandardStatsObject LasicColumn = new AsicStandardStatsObject();
 
       
      
 
             
 
-            List<string> listTableStats  = ParsingTable.Pars(html, "//table[@class='cbi-section-table']",
-                @"<legend>AntMiner</legend>([\w \W ]+)<div class=""cbi-section-node"" style=""margin-top:8px;"">");
+            List<string> listTableStats  = ParsingTable.Pars(html, parsingObject.MainNameTable,
+                parsingObject.MainTableParsingPattern);
             
-            List<string> summaryTable = ParsingTable.Pars(html, "//table[@class='cbi-section-table']",
-                @"<legend>Summary</legend>([\w \W ]+)<legend>Pools</legend>");
+            List<string> summaryTable = ParsingTable.Pars(html, parsingObject.AdditionalNameTable,
+                parsingObject.AdditionalTableParsingPattern);
 
 
           
@@ -56,8 +57,9 @@ namespace AntStats.Avalonia
                     LasicColumn.LasicAsicColumnStats.Add(asicColumn);
                     
                 }
-                catch (Exception e)
-                {// ignored
+                catch (Exception)
+                {
+                    // ignored
                 }
                 
                 
@@ -65,12 +67,8 @@ namespace AntStats.Avalonia
 
             LasicColumn.HashrateAVG = listTableStats[listTableStats.Count-1];
             LasicColumn.DateTime = DateTime.Now.ToString();
-            LasicColumn.ElapsedTime = summaryTable[8 + 0];
+           LasicColumn.ElapsedTime = summaryTable[8 + 0];
 
-
-
-
-            
             return LasicColumn;
         }
 
