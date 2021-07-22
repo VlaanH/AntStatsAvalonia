@@ -41,13 +41,13 @@ namespace AntStatsCore
     public static class Settings
     {
 
-        public static async Task<SettingsData> Get()
+        public static async Task<SettingsData> Get(string path=default)
         {
             SettingsData settings = new SettingsData();
                 
                 try
                 {
-                    using (FileStream fs = new FileStream("settings.json", FileMode.OpenOrCreate))
+                    using (FileStream fs = new FileStream(path+"settings.json", FileMode.OpenOrCreate))
                     {
                         settings = await JsonSerializer.DeserializeAsync<SettingsData>(fs);
                     }
@@ -63,10 +63,10 @@ namespace AntStatsCore
 
 
 
-        public static async void Save(SettingsData settingsClass)
+        public static async void Save(SettingsData settingsClass,string path=default)
         {
            
-            using (FileStream fs = new FileStream("settings.json", FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream(path+"settings.json", FileMode.OpenOrCreate))
             { 
                 //cleaning
                 fs.SetLength(default);

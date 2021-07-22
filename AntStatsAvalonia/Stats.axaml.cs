@@ -5,14 +5,10 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Text;
 using System.Threading;
 using AntStatsCore;
 using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Media;
-using Org.BouncyCastle.Crypto.Parameters;
 
 namespace AntStats.Avalonia
 {

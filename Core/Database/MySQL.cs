@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Security.Policy;
 using System.Threading;
-using System.Threading.Tasks;
-using MySql.Data.MySqlClient;
+using MySqlConnector;
+
 
 namespace AntStatsCore.Database
 {
