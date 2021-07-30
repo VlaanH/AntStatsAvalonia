@@ -9,6 +9,9 @@ using System.Threading;
 using AntStatsCore;
 using System.Threading.Tasks;
 using Avalonia;
+using OxyPlot;
+using OxyPlot.Axes;
+using OxyPlot.Series;
 
 namespace AntStats.Avalonia
 {
@@ -20,9 +23,7 @@ namespace AntStats.Avalonia
         public Stats()
         {
             this.InitializeComponent();
-#if DEBUG
-            this.AttachDevTools();
-#endif
+
         }
         
        
@@ -61,7 +62,8 @@ namespace AntStats.Avalonia
             return column;
         }
         void AddBasicElements()
-        { 
+        {
+            PlotAddPoint(50);
             ColumnList.Status = ColumnAdd("Status", 8);  
             ColumnList.TempChip = ColumnAdd("TempChip", 7);  
             ColumnList.TempPCB = ColumnAdd("TempPCB", 6);  
@@ -189,7 +191,100 @@ namespace AntStats.Avalonia
             
         }
 
+        
+        
+        List<int> dataPoint = new List<int>();
 
+        int getMaxTemp(AsicStandardStatsObject listTemp)
+        {
+            int maxTemp = 0;
+            
+            for (int i = 0; i < listTemp.LasicAsicColumnStats.Count; i++)
+            {
+                try
+                {
+                    if (maxTemp<int.Parse(listTemp.LasicAsicColumnStats[i].TempChip))
+                    {
+                        maxTemp = int.Parse(listTemp.LasicAsicColumnStats[i].TempChip);
+                    }
+                }
+                catch (Exception e)
+                {
+                    // ignored
+                }
+            }
+            
+            return maxTemp;
+        }
+
+
+
+        void PlotAddPoint(int point)
+        {
+            if (point!=0)
+            {
+                DataContext = this;
+            
+                dataPoint.Add(point);
+            
+                Model = DrawPlot(dataPoint,150); 
+            }
+           
+        }
+        private PlotModel DrawPlot(List<int> DP,int MaxDrowPoint)
+        {
+            var plot = new PlotModel 
+            { 
+                
+                LegendPosition = LegendPosition.RightBottom,
+                Background = OxyColors.Black,
+                TextColor = OxyColors.White,
+                PlotType = PlotType.Cartesian,
+                
+                PlotAreaBorderColor = OxyColors.White
+            };
+          
+            
+            plot.Axes.Add(new LinearAxis(){  Title = "Circle", Position = AxisPosition.Bottom});
+            plot.Axes.Add(new LinearAxis(){  Title = "Temp", Position = AxisPosition.Left });
+            
+            
+            LineSeries MaxTemp = new LineSeries
+            {
+                Title = "MAX TEMP", 
+                MarkerType = MarkerType.Diamond,   
+                Color = OxyColors.Red,
+               
+            };
+
+
+            if (MaxDrowPoint<DP.Count)
+            {
+                DP.RemoveAt(0);
+            }
+
+            for (int j = 0; j < DP.Count; j++)
+            {
+                MaxTemp.Points.Add(new DataPoint(j,DP[j]));
+            }
+            
+         
+            plot.Series.Add(MaxTemp);
+            return plot;
+        }
+        
+        
+        private PlotModel _Model;
+
+        public PlotModel Model
+        {
+            get { return this._Model; }
+            set 
+            {
+                this._Model = value;
+                NotifyPropertyChange("Model");
+            }
+        }
         
         private int _progress=0;
 
@@ -203,6 +298,7 @@ namespace AntStats.Avalonia
             }
         }
         
+
         async void GetStats(bool autoUpdate)
         { 
             this.FindControl<ProgressBar>("DatabaseProgressBar").IsVisible = false;
@@ -307,10 +403,20 @@ namespace AntStats.Avalonia
                    UnlockButtons(_errors);
                else if(_errors==false)
                    this.FindControl<Label>("DatabaseProgressBarText").Content = default;
-              
-               
-               if(_errors==false)
+
+
+               if (_errors == false)
+               {
+                   int maxTemp = 0;
+                   await Task.Run(() =>
+                   {
+                       maxTemp = getMaxTemp(statsObject);
+                   });
+                   PlotAddPoint(maxTemp);
                    SetAsicColumnTable(statsObject);
+               }
+
+               
             
         }
 

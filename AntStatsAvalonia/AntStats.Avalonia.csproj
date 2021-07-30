@@ -11,6 +11,7 @@
         <PackageReference Include="HtmlAgilityPack" Version="1.11.33" />
         <PackageReference Include="MessageBox.Avalonia" Version="1.0.5" />
         <PackageReference Include="MySql.Data" Version="8.0.25" />
+        <PackageReference Include="OxyPlot.Avalonia" Version="2.1.0-20201211.2" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Core\AntStatsCore.csproj" />

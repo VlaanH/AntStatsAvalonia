@@ -2,21 +2,37 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:avalonia="http://oxyplot.org/avalonia"
+        xmlns:oxy="clr-namespace:OxyPlot.Avalonia;assembly=OxyPlot.Avalonia" 
         mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="385" 
         x:Class="AntStats.Avalonia.Stats"
         WindowStartupLocation="CenterOwner"
         Title="AntStats.Avalonia" Height="385" Width="900" MinWidth="900" MinHeight="385" >
 
   
-
-     
-
-     
-
-        <Grid x:Name="MainW" Background="#1e2124">
-
-
+       
+<Grid>
+              
     
+
+       <Grid.ColumnDefinitions >
+              <ColumnDefinition Width="5"/>
+              <ColumnDefinition Width="5"/>
+              <ColumnDefinition/>
+       </Grid.ColumnDefinitions>
+       
+       
+       
+       <oxy:PlotView Grid.Column="0"  Background="#1e2124" Model="{Binding Model}" FontSize="10"/>   
+          
+       <GridSplitter  Grid.Column="1" Name="GridSplitter" ResizeBehavior="PreviousAndNext" BorderBrush="#808080" BorderThickness="3"/>
+            
+      
+      
+       <Grid Grid.Column="2"  x:Name="MainW" Background="#1e2124" >
+            
+             
+                   
                 <Grid.RowDefinitions >
                         <RowDefinition/>
                         <RowDefinition/>
@@ -34,53 +50,51 @@
                 <Grid.ColumnDefinitions >
                        <ColumnDefinition/>
                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition />
-                        <ColumnDefinition/>    
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>  
-                        <ColumnDefinition/>
-                      
-                  
+                       <ColumnDefinition/>
+                       <ColumnDefinition/>
+                       <ColumnDefinition/>    
+                       <ColumnDefinition/>
+                       <ColumnDefinition/>
+                       <ColumnDefinition/>  
+                       <ColumnDefinition/>
                 </Grid.ColumnDefinitions >
                 
-                <Label x:Name="label1" Grid.Row="0" Grid.Column="0" 
+                <Label Grid.Row="0" Grid.Column="0" 
                        Content="Chain#"
                        VerticalAlignment="Stretch"
                        FontSize="15"
                        Margin="2"
                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 ></Label>
-                <Label x:Name="label2" Grid.Row="0" Grid.Column="1" 
+                <Label Grid.Row="0" Grid.Column="1" 
                        Content="Frequency"
                        VerticalAlignment="Stretch"
                        FontSize="15"
                        Margin="2"
                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 ></Label>
-                <Label x:Name="label3" Grid.Row="0" Grid.Column="2" 
+                <Label Grid.Row="0" Grid.Column="2" 
                        Content="Watts"
                        VerticalAlignment="Stretch"
                        FontSize="15"
                        Margin="2"
                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 ></Label>
-                <Label x:Name="label4" Grid.Row="0" Grid.Column="3" 
+                <Label Grid.Row="0" Grid.Column="3" 
                        Content="GH/S(ideal)"
                        VerticalAlignment="Stretch"
                        FontSize="15"
                        Margin="2"
                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 ></Label>
-                <Label x:Name="label5" Grid.Row="0" Grid.Column="4" 
+                <Label Grid.Row="0" Grid.Column="4" 
                        Content="GH/S(RT)"
                        VerticalAlignment="Stretch"
                        FontSize="15"
                        Margin="2"
                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 ></Label>
-                <Label x:Name="label6" Grid.Row="0" Grid.Column="5" 
+                <Label Grid.Row="0" Grid.Column="5" 
                        Content="HW"
                        VerticalAlignment="Stretch"
                        FontSize="15"
@@ -89,21 +103,21 @@
                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                 ></Label>
                
-                   <Label x:Name="label7" Grid.Row="0" Grid.Column="6" 
+                   <Label Grid.Row="0" Grid.Column="6" 
                           Content="T(PCB)"
                           VerticalAlignment="Stretch"
                           FontSize="15"
                           Margin="2"
                           VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                    ></Label>
-                   <Label x:Name="label8" Grid.Row="0" Grid.Column="7" 
+                   <Label Grid.Row="0" Grid.Column="7" 
                           Content="T(Chip)"
                           VerticalAlignment="Stretch"
                           FontSize="15"
                           Margin="2"
                           VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
                    ></Label>
-                   <Label x:Name="label9" Grid.Row="0" Grid.Column="8" 
+                   <Label Grid.Row="0" Grid.Column="8" 
                           Content="Status"
                           VerticalAlignment="Stretch"
                           FontSize="15"
@@ -200,4 +214,7 @@
         
         
         </Grid>
+     
+       </Grid>
+        
 </Window>
