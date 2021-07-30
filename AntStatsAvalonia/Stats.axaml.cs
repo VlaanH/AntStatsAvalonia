@@ -265,7 +265,12 @@ namespace AntStats.Avalonia
 
             for (int j = 0; j < DP.Count; j++)
             {
-                MaxTemp.Points.Add(new DataPoint(j,DP[j]));
+                //the first point is added when the program starts, it is equal to 50 so it is hidden
+                if (j>0)
+                {
+                    MaxTemp.Points.Add(new DataPoint(j,DP[j])); 
+                }
+                
             }
             
          
