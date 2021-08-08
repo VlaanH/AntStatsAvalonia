@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Threading;
 using AntStatsCore;
 using System.Threading.Tasks;
-using Avalonia;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -79,29 +78,103 @@ namespace AntStats.Avalonia
 
         private async void SetAsicColumnTable(AntStatsCore.AsicStandardStatsObject asicColumn)
         {
+            string contentDefault = "-";
             int maxI = 9;
             for (int i = 0; i < maxI; i++)
             {
                 await Task.Delay(10);
 
-                if (asicColumn.LasicAsicColumnStats[i].Status!=null)
-                    ColumnList.Status[i].Content=asicColumn.LasicAsicColumnStats[i].Status;
-                if (asicColumn.LasicAsicColumnStats[i].TempChip!=null) 
-                    ColumnList.TempChip[i].Content=asicColumn.LasicAsicColumnStats[i].TempChip;
-                if (asicColumn.LasicAsicColumnStats[i].TempPCB!=null) 
-                    ColumnList.TempPCB[i].Content=asicColumn.LasicAsicColumnStats[i].TempPCB;
-                if (asicColumn.LasicAsicColumnStats[i].HW!=null) 
-                    ColumnList.HW[i].Content=asicColumn.LasicAsicColumnStats[i].HW;
-                if (asicColumn.LasicAsicColumnStats[i].GHRT!=null) 
-                    ColumnList.GHRT[i].Content=asicColumn.LasicAsicColumnStats[i].GHRT;
-                if (asicColumn.LasicAsicColumnStats[i].GHideal!=null) 
-                    ColumnList.GHideal[i].Content= asicColumn.LasicAsicColumnStats[i].GHideal;
-                if (asicColumn.LasicAsicColumnStats[i].Watts!=null) 
-                    ColumnList.Watts[i].Content=asicColumn.LasicAsicColumnStats[i].Watts;
-                if (asicColumn.LasicAsicColumnStats[i].Frequency!=null) 
-                    ColumnList.Frequency[i].Content=asicColumn.LasicAsicColumnStats[i].Frequency;
-                if (asicColumn.LasicAsicColumnStats[i].Chain!=null) 
-                    ColumnList.Chain[i].Content=asicColumn.LasicAsicColumnStats[i].Chain;
+                try
+                {
+                    if (asicColumn.LasicAsicColumnStats[i].Status!=null)
+                        ColumnList.Status[i].Content=asicColumn.LasicAsicColumnStats[i].Status;
+                }
+                catch (Exception e)
+                {
+                    ColumnList.Status[i].Content = contentDefault;
+                }
+
+                try
+                {
+                    if (asicColumn.LasicAsicColumnStats[i].TempChip!=null) 
+                        ColumnList.TempChip[i].Content=asicColumn.LasicAsicColumnStats[i].TempChip;
+                }
+                catch (Exception e)
+                {
+                    ColumnList.TempChip[i].Content = contentDefault;
+                }
+
+                try
+                {
+                    if (asicColumn.LasicAsicColumnStats[i].TempPCB!=null) 
+                        ColumnList.TempPCB[i].Content=asicColumn.LasicAsicColumnStats[i].TempPCB;
+                }
+                catch (Exception e)
+                {
+                    ColumnList.TempPCB[i].Content = contentDefault;
+                }
+
+                try
+                {
+                    if (asicColumn.LasicAsicColumnStats[i].HW!=null) 
+                        ColumnList.HW[i].Content=asicColumn.LasicAsicColumnStats[i].HW;
+                }
+                catch (Exception e)
+                {
+                    ColumnList.HW[i].Content = contentDefault;
+                }
+
+                try
+                {
+                    if (asicColumn.LasicAsicColumnStats[i].GHRT!=null) 
+                        ColumnList.GHRT[i].Content=asicColumn.LasicAsicColumnStats[i].GHRT;
+                }
+                catch (Exception e)
+                {
+                    ColumnList.GHRT[i].Content = contentDefault;
+                }
+
+                try
+                {
+                    if (asicColumn.LasicAsicColumnStats[i].GHideal!=null) 
+                        ColumnList.GHideal[i].Content= asicColumn.LasicAsicColumnStats[i].GHideal;
+                }
+                catch (Exception e)
+                {
+                    ColumnList.GHideal[i].Content = contentDefault;
+                }
+
+                try
+                {
+                    if (asicColumn.LasicAsicColumnStats[i].Watts!=null) 
+                        ColumnList.Watts[i].Content=asicColumn.LasicAsicColumnStats[i].Watts;
+                }
+                catch (Exception e)
+                {
+                    ColumnList.Watts[i].Content = contentDefault;
+                }
+
+                try
+                {
+                    if (asicColumn.LasicAsicColumnStats[i].Frequency!=null) 
+                        ColumnList.Frequency[i].Content=asicColumn.LasicAsicColumnStats[i].Frequency;
+                }
+                catch (Exception e)
+                {
+                    ColumnList.Frequency[i].Content = contentDefault;
+                }
+
+                try
+                {
+                    if (asicColumn.LasicAsicColumnStats[i].Chain!=null) 
+                        ColumnList.Chain[i].Content=asicColumn.LasicAsicColumnStats[i].Chain;
+                }
+                catch (Exception e)
+                {
+                    ColumnList.Chain[i].Content = contentDefault;
+                }
+               
+                
             }
 
             GetLabel("ElapsedTime").Content = asicColumn.ElapsedTime;
@@ -198,22 +271,29 @@ namespace AntStats.Avalonia
         int getMaxTemp(AsicStandardStatsObject listTemp)
         {
             int maxTemp = 0;
-            
-            for (int i = 0; i < listTemp.LasicAsicColumnStats.Count; i++)
+            try
             {
-                try
+                for (int i = 0; i < listTemp.LasicAsicColumnStats.Count; i++)
                 {
-                    if (maxTemp<int.Parse(listTemp.LasicAsicColumnStats[i].TempChip))
+                    try
                     {
-                        maxTemp = int.Parse(listTemp.LasicAsicColumnStats[i].TempChip);
+                        if (maxTemp<int.Parse(listTemp.LasicAsicColumnStats[i].TempChip))
+                        {
+                            maxTemp = int.Parse(listTemp.LasicAsicColumnStats[i].TempChip);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        // ignored
                     }
                 }
-                catch (Exception e)
-                {
-                    // ignored
-                }
             }
-            
+            catch (Exception)
+            {
+                // ignored
+            }
+
+
             return maxTemp;
         }
 
@@ -354,10 +434,10 @@ namespace AntStats.Avalonia
                    { 
                        
                         BlockButtons("Getting from Localhost");
-                       
-                       await Task.Run(() =>
-                           { statsObject = asicStats.GetLocalhost(); });
-                       
+                         
+                        await Task.Run(() =>
+                            { statsObject = asicStats.GetLocalhost(); });
+
                    }
                    catch (Exception exception)
                    {
