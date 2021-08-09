@@ -1,32 +1,59 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace AntStatsCore.Parsing
 {
   public static class ParsingAuthorizationWeb
     {
-     
-        public static string DownloadString(string url,string user,string password)
-        {  
-                string html = default;
-         
+        public class WebHtmlObject
+        {
+            public string HtmlWebSiteWebsite { get; set; }
+
+            public string ApiHtml { get; set; }
+
+        }
+
+  
+        public static WebHtmlObject DownloadHtmlWebsiteOrApi(string ip,string user,string password)
+        {
+                     
+            string apiUrl = $"http://{ip}/cgi-bin/miner_stats.cgi";
+            string websiteUrl = $"http://{ip}/cgi-bin/minerStatus.cgi";
+            WebHtmlObject webHtmlObject = new WebHtmlObject();
+       
                 
                 try
                 {
-                    DigestAuthFixer digest = new DigestAuthFixer(url, user, password);
-                    html = digest.GrabResponse(url);
+                    DigestAuthFixer digestApi = new DigestAuthFixer(apiUrl, user, password);
+                    webHtmlObject.ApiHtml = digestApi.GrabResponse(apiUrl);
+
                 }
                 catch (Exception)
                 {
                     // ignored
                 }
 
+                try
+                {
+                    DigestAuthFixer digestWebsite  = new DigestAuthFixer(websiteUrl, user, password);
+                    webHtmlObject.HtmlWebSiteWebsite = digestWebsite.GrabResponse(websiteUrl);
+                   
+                }
+                catch (Exception )
+                {  // ignored
+                
+                }
+                
+                
 
-                return html;
+                return webHtmlObject;
         }
         
     }

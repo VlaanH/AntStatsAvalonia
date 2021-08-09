@@ -37,11 +37,11 @@ namespace AntStatsCore
         
         public AsicStandardStatsObject GetLocalhost()
         {
-            var html = ParsingAuthorizationWeb.DownloadString($"http://{Settings.IP}/cgi-bin/minerStatus.cgi", Settings.User,
+            var webHtmlObject = ParsingAuthorizationWeb.DownloadHtmlWebsiteOrApi(Settings.IP, Settings.User,
                 Settings.Pass);
 
                 
-             return Html_In_AsicStandartStatsObject._Convert(html,ParsingObject);
+             return Html_In_AsicStandartStatsObject._Convert(webHtmlObject,ParsingObject);
             
         }
         
