@@ -95,7 +95,9 @@ namespace AntStatsCore
 
 
             SettingsData settings = new SettingsData();
-                
+            
+            if (File.Exists(path+profilesDirectory+"/"+profilename+".json"))
+            {
                 try
                 {
                     using (FileStream fs = new FileStream(path+profilesDirectory+"/"+profilename+".json", FileMode.OpenOrCreate))
@@ -107,6 +109,8 @@ namespace AntStatsCore
                 {
                     // ignored
                 }
+            }
+                
 
             return settings;
           
