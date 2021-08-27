@@ -55,16 +55,21 @@ namespace AntStatsCore
             
             await Task.Run(() =>
             {
-               var fdirectorys= new DirectoryInfo(profilesDirectory).GetFiles();
-
-               for (int i = 0; i < fdirectorys.Length; i++)
-               {
-                   var pattern = @"([\w \W ]+).json";
-                   string noExtension = Regex.Match(fdirectorys[i].Name, pattern).Groups[1].Value;
-                   if (noExtension!="")
-                       directorys.Add(noExtension);  
+                if (Directory.Exists(profilesDirectory))
+                {
+                    var fdirectorys= new DirectoryInfo(profilesDirectory).GetFiles();   
+                    for (int i = 0; i < fdirectorys.Length; i++)
+                    {
+                        var pattern = @"([\w \W ]+).json";
+                        string noExtension = Regex.Match(fdirectorys[i].Name, pattern).Groups[1].Value;
+                        if (noExtension!="")
+                            directorys.Add(noExtension);  
                    
-               }
+                    }
+                }
+             
+
+               
                
             });
             
