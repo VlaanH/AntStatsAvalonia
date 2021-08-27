@@ -9,11 +9,21 @@
 
 
     
-    <Grid  Margin="10" > 
-       
-        <StackPanel>
+    <Grid  Margin="6" > 
+        <Grid.ColumnDefinitions >
+            <ColumnDefinition/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition MaxWidth="100"/>
+        </Grid.ColumnDefinitions>
+        
+        
+        <StackPanel Grid.Column="0">
             
-            <Label  Content="Settings" BorderBrush="turquoise" BorderThickness="0,0,0,1" HorizontalContentAlignment="Center" FontSize="30" />
+            <TextBox Name="TextBoxProfile" Watermark="Profile name" Text="Settings" 
+                     BorderBrush="turquoise" BorderThickness="0,0,0,1" 
+                     HorizontalContentAlignment="Center" FontSize="30" 
+                     MaxLength="7"
+                     />
                 
             <Grid  Margin="0,25,0,0">
            
@@ -216,15 +226,31 @@
             ></Button>
             
            
-            
-            
+           
             
         </Grid > 
  
       
       
         
-        
+        <GridSplitter Margin="10,0,0,0" Grid.Column="1" ResizeBehavior="PreviousAndNext" BorderBrush="#808080" BorderThickness="3"/>
+       
+        <StackPanel Grid.Column="2" >
+            <Label Content="Profiles" HorizontalContentAlignment="Center" ></Label>
+              
+            <StackPanel Margin="2" Name="Profiles">
+                
+            </StackPanel>
+            <Button Content="+" FontSize="15"  VerticalAlignment="Stretch"
+                    VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                    HorizontalAlignment="Stretch" Background="black"
+                    Name="UpdatingTheListOfExistingProfiles"
+                    Click="ButtonAddProfile_OnClick"
+            ></Button>
+            
+              
+        </StackPanel>
+
         
         
     </Grid>

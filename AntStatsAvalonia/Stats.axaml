@@ -19,6 +19,8 @@
               <ColumnDefinition Width="5"/>
               <ColumnDefinition Width="5"/>
               <ColumnDefinition/>
+              <ColumnDefinition Width="5"/>
+              <ColumnDefinition MaxWidth="100"/>
        </Grid.ColumnDefinitions>
        
        
@@ -215,6 +217,29 @@
         
         </Grid>
      
+       
+       <GridSplitter  Grid.Column="3" ResizeBehavior="PreviousAndNext" BorderBrush="#808080" BorderThickness="3"/>
+       
+       <StackPanel Grid.Column="4" >
+              <Label Content="Profiles" HorizontalContentAlignment="Center" ></Label>
+              
+              <StackPanel Margin="2" Name="Profiles">
+                  
+                           
+                           
+                    
+
+             </StackPanel>
+              <Button Content="↺" FontSize="15"  VerticalAlignment="Stretch"
+                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                      HorizontalAlignment="Stretch" Background="black"
+                      Name="UpdatingTheListOfExistingProfiles"
+                      Click="ButtonUpdatingTheListOfExistingProfiles_OnClick"
+                      ></Button>
+            
+              
+       </StackPanel>
+       
        </Grid>
         
 </Window>

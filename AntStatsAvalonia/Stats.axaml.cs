@@ -8,9 +8,12 @@ using System.ComponentModel;
 using System.Threading;
 using AntStatsCore;
 using System.Threading.Tasks;
+using AntStats.Avalonia.Profile;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using HorizontalAlignment = Avalonia.Layout.HorizontalAlignment;
+
 
 namespace AntStats.Avalonia
 {
@@ -39,9 +42,84 @@ namespace AntStats.Avalonia
             AvaloniaXamlLoader.Load(this);
             AddBasicElements();
             ColumnTarget.Add();
+            AddingExistingSettingsProfiles();
+           
+
         }
 
-       
+        public string SelectedProfile = default;
+        void profilesAdd(string name,bool IsEnabled)
+        {
+            
+            ProfileAvalonObj profilesuAvalonObj = new ProfileAvalonObj();
+            profilesuAvalonObj.prof.Content = name;
+            profilesuAvalonObj.prof.IsEnabled = IsEnabled;
+            profilesuAvalonObj.prof.HorizontalAlignment = HorizontalAlignment.Stretch;
+            profilesuAvalonObj.prof.HorizontalContentAlignment=HorizontalAlignment.Center;
+            
+            
+            
+            ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats.Add(profilesuAvalonObj);
+           
+            this.FindControl<StackPanel>("Profiles").Children.Add(profilesuAvalonObj.prof);
+            
+            
+            
+            profilesuAvalonObj.prof.Click += (s, e) =>
+            {
+                ProfileManagement.SelectProfile(ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats,name);
+                
+                SelectedProfile = name;
+                ProfileManagement.GlobalSelectedProfile = name;
+            };
+        }
+
+        private void RemoveSettingsProfiles()
+        {
+            for (int i = 0; i <  ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats.Count; i++)
+            {
+                this.FindControl<StackPanel>("Profiles").Children.Remove(ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats[i].prof);
+            }
+
+            ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats = new List<ProfileAvalonObj>();
+
+        }
+
+
+        private async void AddingExistingSettingsProfiles()
+        {
+            var profiles = await Settings.GetProfiles();
+            if (profiles!=default)
+            {
+                for (int i = 0; i < profiles.Count; i++)
+                {
+                    bool enable = profiles[i].NameProfile!=SelectedProfile;
+
+
+                    profilesAdd(profiles[i].NameProfile,enable);
+                
+                }
+                //selection of the first profile in the list if no profile is selected
+                if (ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats.Count > 0 & SelectedProfile == default)
+                {
+                
+                    ProfileManagement.SelectProfile(ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats,(string)ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats[0].prof.Content);
+                    SelectedProfile = (string) ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats[0].prof.Content;
+                }
+            }
+            
+
+        }
+     
+
+
+
+        private void ButtonUpdatingTheListOfExistingProfiles_OnClick(object? sender, RoutedEventArgs e)
+        {
+            RemoveSettingsProfiles();
+            AddingExistingSettingsProfiles();
+         
+        }
 
 
         List<Label> ColumnAdd(string columnName,int columnId)
@@ -76,7 +154,7 @@ namespace AntStats.Avalonia
         }
 
 
-        private async void SetAsicColumnTable(AntStatsCore.AsicStandardStatsObject asicColumn)
+        private async void SetAsicColumnTable(AsicStandardStatsObject asicColumn)
         {
             string contentDefault = "-";
             int maxI = 9;
@@ -225,7 +303,7 @@ namespace AntStats.Avalonia
         {
             SettingsData settings = new SettingsData();
             await Task.Run(() =>
-                {  settings = Settings.Get().Result; });
+                {  settings = Settings.Get(SelectedProfile,default).Result; });
 
             if (settings.AutoUpdate == true | this.FindControl<Button>("Settings").IsEnabled==false)
             {
@@ -405,7 +483,7 @@ namespace AntStats.Avalonia
             
             
                await Task.Run(() =>
-               {  settings = Settings.Get().Result; });
+               {  settings = Settings.Get(SelectedProfile,default).Result; });
 
       
                
@@ -509,7 +587,7 @@ namespace AntStats.Avalonia
 
         private void Settings_OnClick(object? sender, RoutedEventArgs e)
         {
-            SettingsW.Show(this);
+            SettingsW.Show(this,SelectedProfile);
         }
         
 
@@ -527,6 +605,8 @@ namespace AntStats.Avalonia
         #endregion
 
 
+        
     }
+
     
 }
