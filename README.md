@@ -10,8 +10,8 @@ I tested on Bitmain Antminer T9 +
 
 # Screenshots
 
-  <img src="https://cdn.discordapp.com/attachments/504344062485069828/861744747080318986/1.png" width="650">
-  <img src="https://cdn.discordapp.com/attachments/504344062485069828/861744747924291614/2.png" width="650">
+  <img src="https://cdn.discordapp.com/attachments/504344062485069828/881222874445266944/Screenshot_20210828_200437.png" width="650">
+  <img src="https://cdn.discordapp.com/attachments/504344062485069828/881223417125285888/unknown.png" width="650">
 
 
 
