@@ -70,9 +70,12 @@ namespace AntStats.Avalonia
             ProfileAvalonObj profilesuAvalonObj = new ProfileAvalonObj();
             profilesuAvalonObj.prof.Content = profileName;
             profilesuAvalonObj.prof.IsEnabled = isEnabled;
+            profilesuAvalonObj.prof.Classes = Classes.Parse("Profile_buttons");
+            
             
             profilesuAvalonObj.minus.Content = "-";
-   
+            profilesuAvalonObj.minus.Classes = Classes.Parse("Profile_buttons");
+           
             
            
             
@@ -410,16 +413,17 @@ namespace AntStats.Avalonia
                 {
                     ShowError("Table Exist");
                 }
-                
+             
+                Settings.Save(settingsClass,GetTextBox("TextBoxProfile").Text);
             }
             catch (Exception exception)
             {
                 ShowError("DataBase Error");
             }
 
-           
-            
-            Settings.Save(settingsClass,GetTextBox("TextBoxProfile").Text);
+ 
+          
+                
         }
 
         private void ToggleSwitchMySql_OnClick(object? sender, RoutedEventArgs e)
