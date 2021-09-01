@@ -2,14 +2,32 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:avalonia="http://oxyplot.org/avalonia"
         xmlns:oxy="clr-namespace:OxyPlot.Avalonia;assembly=OxyPlot.Avalonia" 
         mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="385" 
         x:Class="AntStats.Avalonia.Stats"
         WindowStartupLocation="CenterOwner"
         Title="AntStats.Avalonia" Height="385" Width="900" MinWidth="900" MinHeight="385" >
 
-  
+  <Window.Styles>
+         <Style Selector="Label">
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Margin" Value="2"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+         </Style>
+         
+         
+         <Style Selector="Button">
+                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+         </Style>
+         
+  </Window.Styles>
+       
+       
        
 <Grid>
               
@@ -31,11 +49,9 @@
             
       
       
-       <Grid Grid.Column="2"  x:Name="MainW" Background="#1e2124" >
-            
-             
+       <Grid Grid.Column="2"  x:Name="MainW" Background="#1e2124" Margin="5,0,5,0">
                    
-                <Grid.RowDefinitions >
+              <Grid.RowDefinitions >
                         <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
@@ -60,150 +76,89 @@
                        <ColumnDefinition/>  
                        <ColumnDefinition/>
                 </Grid.ColumnDefinitions >
-                
-                <Label Grid.Row="0" Grid.Column="0" 
-                       Content="Chain#"
-                       VerticalAlignment="Stretch"
-                       FontSize="15"
-                       Margin="2"
-                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                ></Label>
-                <Label Grid.Row="0" Grid.Column="1" 
-                       Content="Frequency"
-                       VerticalAlignment="Stretch"
-                       FontSize="15"
-                       Margin="2"
-                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                ></Label>
-                <Label Grid.Row="0" Grid.Column="2" 
-                       Content="Watts"
-                       VerticalAlignment="Stretch"
-                       FontSize="15"
-                       Margin="2"
-                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                ></Label>
-                <Label Grid.Row="0" Grid.Column="3" 
-                       Content="GH/S(ideal)"
-                       VerticalAlignment="Stretch"
-                       FontSize="15"
-                       Margin="2"
-                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                ></Label>
-                <Label Grid.Row="0" Grid.Column="4" 
-                       Content="GH/S(RT)"
-                       VerticalAlignment="Stretch"
-                       FontSize="15"
-                       Margin="2"
-                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                ></Label>
-                <Label Grid.Row="0" Grid.Column="5" 
-                       Content="HW"
-                       VerticalAlignment="Stretch"
-                       FontSize="15"
-                       Margin="2"
-                       ToolTip.Tip="Hardware warnings"
-                       VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                ></Label>
-               
-                   <Label Grid.Row="0" Grid.Column="6" 
-                          Content="T(PCB)"
-                          VerticalAlignment="Stretch"
-                          FontSize="15"
-                          Margin="2"
-                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                   ></Label>
-                   <Label Grid.Row="0" Grid.Column="7" 
-                          Content="T(Chip)"
-                          VerticalAlignment="Stretch"
-                          FontSize="15"
-                          Margin="2"
-                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                   ></Label>
-                   <Label Grid.Row="0" Grid.Column="8" 
-                          Content="Status"
-                          VerticalAlignment="Stretch"
-                          FontSize="15"
-                          Margin="2"
-                          VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                   ></Label>
+              
+              
+              <Label Grid.Row="0" Grid.Column="0" 
+                     Content="Chain#"
+              ></Label>
+              
+              <Label Grid.Row="0" Grid.Column="1" 
+                     Content="Frequency"
+              ></Label>
+              
+              <Label Grid.Row="0" Grid.Column="2" 
+                     Content="Watts"
+              ></Label>
+              
+              <Label Grid.Row="0" Grid.Column="3" 
+                     Content="GH/S(ideal)"
+              ></Label>
+              
+              <Label Grid.Row="0" Grid.Column="4" 
+                     Content="GH/S(RT)"
+              ></Label>
+              
+              <Label Grid.Row="0" Grid.Column="5" 
+                     Content="HW"
+              ></Label>
+              
+              <Label Grid.Row="0" Grid.Column="6" 
+                     Content="T(PCB)"
+              ></Label>
+              
+              <Label Grid.Row="0" Grid.Column="7" 
+                     Content="T(Chip)"
+              ></Label>
+              
+              <Label Grid.Row="0" Grid.Column="8" 
+                     Content="Status"
+              ></Label>
           
-               
-                
-                
-            
-               
-     
+              
                
                
-               <Label x:Name="Tooal" Grid.Row="10" Grid.Column="0" 
-                      Content="Total:"
-                      VerticalAlignment="Stretch"
-                      FontSize="15"
-                      Margin="2"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-               ></Label>
+              <Label x:Name="Tooal" Grid.Row="10" Grid.Column="0" 
+                     Content="Total:"
+              ></Label>
                
-               <Label x:Name="ElapsedTime" Grid.Row="10" Grid.Column="1" 
-                      Grid.ColumnSpan="2"
-                      VerticalAlignment="Stretch"
-                      FontSize="15"
-                      Margin="2"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-               ></Label>
+              <Label x:Name="ElapsedTime" Grid.Row="10" Grid.Column="1" 
+                     Grid.ColumnSpan="2"
+              ></Label>
                
-               <Label x:Name="HashrateAvg" Grid.Row="10" Grid.Column="3" 
-                      Grid.ColumnSpan="2"
-                      VerticalAlignment="Stretch"
-                      FontSize="15"
-                      Margin="2"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-               ></Label>
-               <Label x:Name="DateTime" Grid.Row="10" Grid.Column="6" 
-                      Grid.ColumnSpan="2"
-                      VerticalAlignment="Stretch"
-                      FontSize="15"
-                      Margin="2"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-               ></Label>
+              <Label x:Name="HashrateAvg" Grid.Row="10" Grid.Column="3" 
+                     Grid.ColumnSpan="2"
+              ></Label>
+              <Label x:Name="DateTime" Grid.Row="10" Grid.Column="6" 
+                     Grid.ColumnSpan="2"
+              ></Label>
 
-
-               
-               
+              
             
                
                
-                <Button           
-                       Click="Button_OnClick"
-                        x:Name="ButtonStats" VerticalAlignment="Stretch"
-                        VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                        HorizontalAlignment="Stretch"
-                        Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="5" Content="Get or Start auto update"
-                       Margin="1"
-                ></Button>
+              <Button           
+                     Click="Button_OnClick"
+                     x:Name="ButtonStats"
+                     Grid.Row="11" Grid.Column="2" Grid.ColumnSpan="5" 
+                     Content="Get or Start auto update"
+                     Margin="1"
+              ></Button>
                 
               
-               <Button           
-                       
-                      Click="Settings_OnClick"
-                      x:Name="Settings" VerticalAlignment="Stretch"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                      HorizontalAlignment="Stretch"
-                      Grid.Row="11" Grid.Column="8"  Content="Settings"
-                      Margin="1"
-               ></Button>
+              <Button           
+                     Click="Settings_OnClick"
+                     x:Name="Settings" 
+                     Grid.Row="11" Grid.Column="8"  
+                     Content="Settings"
+                     Margin="1"
+              ></Button>
                 
+              
+               <Label x:Name="AutoUpdateProgress" Grid.Row="11" Grid.Column="7" ></Label>
+              
+              
              
-            
-               <Label x:Name="AutoUpdateProgress" Grid.Row="11" Grid.Column="7" 
-                      VerticalAlignment="Stretch"
-                      FontSize="15"
-                      
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-               ></Label>
-               
-               
-             
-               <Grid Grid.Row="11" Grid.ColumnSpan="2" >  
+               <Grid Grid.Column="0" Grid.Row="11" Grid.ColumnSpan="2" >  
                       <ProgressBar  x:Name="DatabaseProgressBar" 
                                     Value="{Binding ProgressBar}"
                                     Height="5" Minimum="0" IsVisible="False"/>
@@ -223,20 +178,18 @@
        <StackPanel Grid.Column="4" >
               <Label Content="Profiles" HorizontalContentAlignment="Center" ></Label>
               
+              
               <StackPanel Margin="2" Name="Profiles">
-                  
-                           
-                           
-                    
-
-             </StackPanel>
-              <Button Content="↺" FontSize="15"  VerticalAlignment="Stretch"
-                      VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
-                      HorizontalAlignment="Stretch" Background="black"
+                     
+              </StackPanel>
+              
+              
+              
+              <Button Content="↺" FontSize="15" Background="black"
                       Name="UpdatingTheListOfExistingProfiles"
                       Click="ButtonUpdatingTheListOfExistingProfiles_OnClick"
-                      ></Button>
-            
+              ></Button>
+              
               
        </StackPanel>
        
