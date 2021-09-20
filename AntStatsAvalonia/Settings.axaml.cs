@@ -35,7 +35,7 @@ namespace AntStats.Avalonia
         
         async void LoadingSettings()
         {
-            ProfilesAvaloniaObjList.ListProfilesuAvalonObjSettings = new List<ProfileAvalonObj>();
+            ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings = new List<ProfileAvalonObj>();
             try
             {
                 AddingExistingSettingsProfiles();
@@ -44,7 +44,7 @@ namespace AntStats.Avalonia
                 {
                     var settings = await Settings.Get(ProfileManagement.GlobalSelectedProfile,default);
                     
-                    ProfileManagement.SelectProfile(ProfilesAvaloniaObjList.ListProfilesuAvalonObjSettings,ProfileManagement.GlobalSelectedProfile);
+                    ProfileManagement.SelectProfile(ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings,ProfileManagement.GlobalSelectedProfile);
                     
                     SelectedProfile = ProfileManagement.GlobalSelectedProfile;
                     
@@ -68,30 +68,30 @@ namespace AntStats.Avalonia
         {
             
             ProfileAvalonObj profilesuAvalonObj = new ProfileAvalonObj();
-            profilesuAvalonObj.prof.Content = profileName;
-            profilesuAvalonObj.prof.IsEnabled = isEnabled;
-            profilesuAvalonObj.prof.Classes = Classes.Parse("Profile_buttons");
+            profilesuAvalonObj.profButton.Content = profileName;
+            profilesuAvalonObj.profButton.IsEnabled = isEnabled;
+            profilesuAvalonObj.profButton.Classes = Classes.Parse("Profile_buttons");
             
             
-            profilesuAvalonObj.minus.Content = "-";
-            profilesuAvalonObj.minus.Classes = Classes.Parse("Profile_buttons");
+            profilesuAvalonObj.minusButton.Content = "-";
+            profilesuAvalonObj.minusButton.Classes = Classes.Parse("Profile_buttons");
            
             
            
             
             DockPanel dockPanel = new DockPanel();
-            dockPanel.Children.Add(profilesuAvalonObj.prof);
-            dockPanel.Children.Add(profilesuAvalonObj.minus);
+            dockPanel.Children.Add(profilesuAvalonObj.profButton);
+            dockPanel.Children.Add(profilesuAvalonObj.minusButton);
 
             profilesuAvalonObj.dockPanel = dockPanel;
             
-            ProfilesAvaloniaObjList.ListProfilesuAvalonObjSettings.Add(profilesuAvalonObj);
+            ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings.Add(profilesuAvalonObj);
         
             this.FindControl<StackPanel>("Profiles").Children.Add(dockPanel);
             
             
             
-            profilesuAvalonObj.minus.Click += (s, e) =>
+            profilesuAvalonObj.minusButton.Click += (s, e) =>
             { 
                
                 this.FindControl<StackPanel>("Profiles").Children.Remove(dockPanel);
@@ -101,15 +101,15 @@ namespace AntStats.Avalonia
             };
             
             
-            profilesuAvalonObj.prof.Click += async (s, e) =>
+            profilesuAvalonObj.profButton.Click += async (s, e) =>
             {
                     
-                for (int i = 0; i < ProfilesAvaloniaObjList.ListProfilesuAvalonObjSettings.Count; i++)
+                for (int i = 0; i < ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings.Count; i++)
                 {
-                    ProfilesAvaloniaObjList.ListProfilesuAvalonObjSettings[i].prof.IsEnabled = true;
+                    ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings[i].profButton.IsEnabled = true;
                 }
 
-                profilesuAvalonObj.prof.IsEnabled = false;
+                profilesuAvalonObj.profButton.IsEnabled = false;
                 SelectedProfile = profileName;
                 
                 var settings = await Settings.Get(profileName,default);
@@ -313,12 +313,12 @@ namespace AntStats.Avalonia
 
         private void RemoveSettingsProfiles()
         {
-            for (int i = 0; i <  ProfilesAvaloniaObjList.ListProfilesuAvalonObjSettings.Count; i++)
+            for (int i = 0; i <  ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings.Count; i++)
             {
-                this.FindControl<StackPanel>("Profiles").Children.Remove(ProfilesAvaloniaObjList.ListProfilesuAvalonObjSettings[i].dockPanel);
+                this.FindControl<StackPanel>("Profiles").Children.Remove(ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings[i].dockPanel);
             }
 
-            ProfilesAvaloniaObjList.ListProfilesuAvalonObjSettings = new List<ProfileAvalonObj>();
+            ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings = new List<ProfileAvalonObj>();
 
         }
         

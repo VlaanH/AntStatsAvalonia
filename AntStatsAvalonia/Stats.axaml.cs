@@ -52,22 +52,22 @@ namespace AntStats.Avalonia
         {
             
             ProfileAvalonObj profilesuAvalonObj = new ProfileAvalonObj();
-            profilesuAvalonObj.prof.Content = name;
-            profilesuAvalonObj.prof.IsEnabled = IsEnabled;
-            profilesuAvalonObj.prof.HorizontalAlignment = HorizontalAlignment.Stretch;
-            profilesuAvalonObj.prof.HorizontalContentAlignment=HorizontalAlignment.Center;
+            profilesuAvalonObj.profButton.Content = name;
+            profilesuAvalonObj.profButton.IsEnabled = IsEnabled;
+            profilesuAvalonObj.profButton.HorizontalAlignment = HorizontalAlignment.Stretch;
+            profilesuAvalonObj.profButton.HorizontalContentAlignment=HorizontalAlignment.Center;
             
             
             
-            ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats.Add(profilesuAvalonObj);
+            ProfilesAvaloniaObjList.ListProfilesAvalonObjStats.Add(profilesuAvalonObj);
            
-            this.FindControl<StackPanel>("Profiles").Children.Add(profilesuAvalonObj.prof);
+            this.FindControl<StackPanel>("Profiles").Children.Add(profilesuAvalonObj.profButton);
             
             
             
-            profilesuAvalonObj.prof.Click += (s, e) =>
+            profilesuAvalonObj.profButton.Click += (s, e) =>
             {
-                ProfileManagement.SelectProfile(ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats,name);
+                ProfileManagement.SelectProfile(ProfilesAvaloniaObjList.ListProfilesAvalonObjStats,name);
                 
                 SelectedProfile = name;
                 ProfileManagement.GlobalSelectedProfile = name;
@@ -76,12 +76,12 @@ namespace AntStats.Avalonia
 
         private void RemoveSettingsProfiles()
         {
-            for (int i = 0; i <  ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats.Count; i++)
+            for (int i = 0; i <  ProfilesAvaloniaObjList.ListProfilesAvalonObjStats.Count; i++)
             {
-                this.FindControl<StackPanel>("Profiles").Children.Remove(ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats[i].prof);
+                this.FindControl<StackPanel>("Profiles").Children.Remove(ProfilesAvaloniaObjList.ListProfilesAvalonObjStats[i].profButton);
             }
 
-            ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats = new List<ProfileAvalonObj>();
+            ProfilesAvaloniaObjList.ListProfilesAvalonObjStats = new List<ProfileAvalonObj>();
 
         }
 
@@ -100,11 +100,11 @@ namespace AntStats.Avalonia
                 
                 }
                 //selection of the first profile in the list if no profile is selected
-                if (ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats.Count > 0 & SelectedProfile == default)
+                if (ProfilesAvaloniaObjList.ListProfilesAvalonObjStats.Count > 0 & SelectedProfile == default)
                 {
                 
-                    ProfileManagement.SelectProfile(ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats,(string)ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats[0].prof.Content);
-                    SelectedProfile = (string) ProfilesAvaloniaObjList.ListProfilesuAvalonObjStats[0].prof.Content;
+                    ProfileManagement.SelectProfile(ProfilesAvaloniaObjList.ListProfilesAvalonObjStats,(string)ProfilesAvaloniaObjList.ListProfilesAvalonObjStats[0].profButton.Content);
+                    SelectedProfile = (string) ProfilesAvaloniaObjList.ListProfilesAvalonObjStats[0].profButton.Content;
                 }
             }
             
@@ -324,11 +324,12 @@ namespace AntStats.Avalonia
                 {
                   
                     GetStats(true);
+                    var delayTime = int.Parse(settings.AutoUpdateValue) * 60;
                     
-                    for (int i = 0; i < int.Parse(settings.AutoUpdateValue)*60 & this.FindControl<Button>("Settings").IsEnabled==false; i++)
+                    for (int i = 0; i <  delayTime & this.FindControl<Button>("Settings").IsEnabled==false; i++)
                     {
                         
-                        this.FindControl<Label>("AutoUpdateProgress").Content = (int.Parse(settings.AutoUpdateValue)*60)-i+"s";
+                        this.FindControl<Label>("AutoUpdateProgress").Content = (delayTime)-i+"s";
                         
                         await Task.Delay(1000);
                     }
