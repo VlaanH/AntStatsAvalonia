@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using AntStats.Avalonia.Profile;
 using AntStatsCore.Database;
 using AntStatsCore;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
@@ -103,15 +102,12 @@ namespace AntStats.Avalonia
             
             profilesuAvalonObj.profButton.Click += async (s, e) =>
             {
-                    
-                for (int i = 0; i < ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings.Count; i++)
-                {
-                    ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings[i].profButton.IsEnabled = true;
-                }
-
-                profilesuAvalonObj.profButton.IsEnabled = false;
-                SelectedProfile = profileName;
                 
+                ProfileManagement.SelectProfile(ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings,profileName);
+                SelectedProfile = profileName;
+               
+                
+                 
                 var settings = await Settings.Get(profileName,default);
                 
                 SetSetting(settings); 
@@ -120,19 +116,7 @@ namespace AntStats.Avalonia
         }
 
 
-         private async void AddingExistingSettingsProfiles()
-         {
-
-             var profiles = await Settings.GetProfiles();
-             for (int i = 0; i < profiles.Count; i++)
-             {
-                 if (profiles[i].NameProfile == SelectedProfile)
-                     AddProfile(profiles[i].NameProfile, false);
-                 else
-                     AddProfile(profiles[i].NameProfile, true);
-
-             }
-         }
+        
 
 
 
@@ -310,7 +294,19 @@ namespace AntStats.Avalonia
             return settings;
         }
 
+        private async void AddingExistingSettingsProfiles()
+        {
 
+            var profiles = await Settings.GetProfiles();
+            for (int i = 0; i < profiles.Count; i++)
+            {
+                if (profiles[i].NameProfile == SelectedProfile)
+                    AddProfile(profiles[i].NameProfile, false);
+                else
+                    AddProfile(profiles[i].NameProfile, true);
+
+            }
+        }
         private void RemoveSettingsProfiles()
         {
             for (int i = 0; i <  ProfilesAvaloniaObjList.ListProfilesAvalonObjSettings.Count; i++)
